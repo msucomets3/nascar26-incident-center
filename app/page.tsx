@@ -7,6 +7,8 @@ export default function HomePage() {
   const [series, setSeries] = useState("Redline Cup Series");
   const [incidentAgainst, setIncidentAgainst] = useState("");
   const [description, setDescription] = useState("");
+  const [videoFile, setVideoFile] =
+  useState<File | null>(null);
 
   async function submitTicket(
     event: React.FormEvent
@@ -128,6 +130,19 @@ export default function HomePage() {
             }}
           />
         </div>
+        <div style={{ marginBottom: "1rem" }}>
+  <label>Video Clip</label>
+  <br />
+  <input
+    type="file"
+    accept="video/*"
+    onChange={(e) =>
+      setVideoFile(
+        e.target.files?.[0] || null
+      )
+    }
+  />
+</div>
 
         <button
           type="submit"
