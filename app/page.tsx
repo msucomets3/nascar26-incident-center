@@ -47,6 +47,11 @@ export default function HomePage() {
       </p>
 
       <hr />
+      <p>
+  <a href="/tickets">
+    View Existing Ticket
+  </a>
+</p>
 
       <h2>Submit New Incident</h2>
 
