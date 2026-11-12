@@ -40,9 +40,20 @@ export default function HomePage() {
 
     const data = await response.json();
 
-    alert(
-      `Ticket Created: ${data.ticketCode}`
-    );
+await fetch("/api/ticket-videos", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    ticketId: data.ticketId,
+    videos: uploadedUrls,
+  }),
+});
+
+alert(
+  `Ticket Created: ${data.ticketCode}`
+);
   } catch (error) {
     alert(
       "Video upload failed. Please try again."
