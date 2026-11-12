@@ -15,24 +15,18 @@ export default function HomePage() {
 ) {
   event.preventDefault();
 
-  alert(
-    "Video uploads will be connected next."
-  );
-}
-    event.preventDefault();
-
-    const response = await fetch("/api/tickets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        discordName,
-        series,
-        incidentAgainst,
-        description,
-      }),
-    });
+  const response = await fetch("/api/tickets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      discordName,
+      series,
+      incidentAgainst,
+      description,
+    }),
+  });
 
     const data = await response.json();
 
