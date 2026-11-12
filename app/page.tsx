@@ -1,4 +1,36 @@
+"use client";
+
+import { useState } from "react";
+
 export default function HomePage() {
+  const [discordName, setDiscordName] = useState("");
+  const [series, setSeries] = useState("Redline Cup Series");
+  const [incidentAgainst, setIncidentAgainst] = useState("");
+  const [description, setDescription] = useState("");
+
+  async function submitTicket(
+    event: React.FormEvent
+  ) {
+    event.preventDefault();
+
+    const response = await fetch("/api/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        discordName,
+        series,
+        incidentAgainst,
+        description,
+      }),
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+  }
+
   return (
     <main
       style={{
@@ -10,30 +42,53 @@ export default function HomePage() {
     >
       <h1>NASCAR 26 Incident Center</h1>
 
-      <p>Submit incidents for league officials to review.</p>
+      <p>
+        Submit incidents for league officials to review.
+      </p>
 
       <hr />
 
       <h2>Submit New Incident</h2>
 
-      <form>
+      <form onSubmit={submitTicket}>
         <div style={{ marginBottom: "1rem" }}>
           <label>Discord Name</label>
           <br />
           <input
+            value={discordName}
+            onChange={(e) =>
+              setDiscordName(e.target.value)
+            }
             type="text"
-            placeholder="Your Discord Name"
-            style={{ width: "100%", padding: "8px" }}
+            style={{
+              width: "100%",
+              padding: "8px",
+            }}
           />
         </div>
 
         <div style={{ marginBottom: "1rem" }}>
           <label>Series</label>
           <br />
-          <select style={{ width: "100%", padding: "8px" }}>
-            <option>Redline Cup Series</option>
-            <option>Grand National Series</option>
-            <option>Rapid Response Truck Series</option>
+          <select
+            value={series}
+            onChange={(e) =>
+              setSeries(e.target.value)
+            }
+            style={{
+              width: "100%",
+              padding: "8px",
+            }}
+          >
+            <option>
+              Redline Cup Series
+            </option>
+            <option>
+              Grand National Series
+            </option>
+            <option>
+              Rapid Response Truck Series
+            </option>
           </select>
         </div>
 
@@ -41,9 +96,15 @@ export default function HomePage() {
           <label>Incident Against</label>
           <br />
           <input
+            value={incidentAgainst}
+            onChange={(e) =>
+              setIncidentAgainst(e.target.value)
+            }
             type="text"
-            placeholder="Driver Being Reported"
-            style={{ width: "100%", padding: "8px" }}
+            style={{
+              width: "100%",
+              padding: "8px",
+            }}
           />
         </div>
 
@@ -51,8 +112,15 @@ export default function HomePage() {
           <label>Description</label>
           <br />
           <textarea
+            value={description}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
             rows={6}
-            style={{ width: "100%", padding: "8px" }}
+            style={{
+              width: "100%",
+              padding: "8px",
+            }}
           />
         </div>
 
