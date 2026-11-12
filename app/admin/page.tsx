@@ -69,6 +69,14 @@ export default function AdminPage() {
             <strong>Description:</strong>{" "}
             {ticket.description}
           </p>
+          
+          <p>
+  <a
+    href={`/admin/ticket/${ticket.id}`}
+  >
+    Review Ticket
+  </a>
+</p>
         </div>
       ))}
     </main>
