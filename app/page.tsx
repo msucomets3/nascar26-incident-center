@@ -10,9 +10,7 @@ export default function HomePage() {
     >
       <h1>NASCAR 26 Incident Center</h1>
 
-      <p>
-        Submit incidents for league officials to review.
-      </p>
+      <p>Submit incidents for league officials to review.</p>
 
       <hr />
 
@@ -32,9 +30,7 @@ export default function HomePage() {
         <div style={{ marginBottom: "1rem" }}>
           <label>Series</label>
           <br />
-          <select
-            style={{ width: "100%", padding: "8px" }}
-          >
+          <select style={{ width: "100%", padding: "8px" }}>
             <option>Redline Cup Series</option>
             <option>Grand National Series</option>
             <option>Rapid Response Truck Series</option>
