@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { uploadVideo } from "../lib/uploadVideo";
 
 export default function HomePage() {
   const [discordName, setDiscordName] = useState("");
@@ -15,23 +16,39 @@ export default function HomePage() {
 ) {
   event.preventDefault();
 
-  const response = await fetch("/api/tickets", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      discordName,
-      series,
-      incidentAgainst,
-      description,
-    }),
-  });
+  try {
+    const uploadedUrls: string[] = [];
+
+    for (const file of videoFiles) {
+      const url = await uploadVideo(file);
+      uploadedUrls.push(url);
+    }
+
+    const response = await fetch("/api/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        discordName,
+        series,
+        incidentAgainst,
+        description,
+        uploadedUrls,
+      }),
+    });
 
     const data = await response.json();
 
-    alert(data.message);
+    alert(
+      `Ticket Created: ${data.ticketCode}`
+    );
+  } catch (error) {
+    alert(
+      "Video upload failed. Please try again."
+    );
   }
+}
 
   return (
     <main
