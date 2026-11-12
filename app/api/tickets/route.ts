@@ -17,18 +17,20 @@ export async function POST(request: Request) {
 
     const ticketCode = generateTicketCode();
 
-    const { error } = await supabase
-      .from("tickets")
-      .insert([
-        {
-          ticket_code: ticketCode,
-          discord_name: body.discordName,
-          series: body.series,
-          incident_against: body.incidentAgainst,
-          description: body.description,
-          status: "open",
-        },
-      ]);
+    const { data, error } = await supabase
+  .from("tickets")
+  .insert([
+    {
+      ticket_code: ticketCode,
+      discord_name: body.discordName,
+      series: body.series,
+      incident_against: body.incidentAgainst,
+      description: body.description,
+      status: "open",
+    },
+  ])
+  .select()
+  .single();
 
     if (error) {
       console.error(error);
@@ -45,9 +47,10 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-      success: true,
-      message: `Ticket Created: ${ticketCode}`,
-    });
+  success: true,
+  ticketId: data.id,
+  ticketCode,
+});
   } catch (error) {
     return NextResponse.json(
       {
