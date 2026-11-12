@@ -3,11 +3,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../../../lib/supabase";
 
-export default function TicketPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function TicketPage(props: any) {
+  const params = props.params;
   const [ticket, setTicket] = useState<any>(null);
   const [videos, setVideos] = useState<any[]>([]);
 
