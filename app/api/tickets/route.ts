@@ -1,23 +1,61 @@
 import { NextResponse } from "next/server";
+import { supabase } from "../../../lib/supabase";
+
+function generateTicketCode() {
+  return (
+    "TKT-" +
+    Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase()
+  );
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    console.log("Ticket received:", body);
+    const ticketCode = generateTicketCode();
+
+    const { error } = await supabase
+      .from("tickets")
+      .insert([
+        {
+          ticket_code: ticketCode,
+          discord_name: body.discordName,
+          series: body.series,
+          incident_against: body.incidentAgainst,
+          description: body.description,
+          status: "open",
+        },
+      ]);
+
+    if (error) {
+      console.error(error);
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: error.message,
+        },
+        {
+          status: 500,
+        }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      message: "Ticket received"
+      message: `Ticket Created: ${ticketCode}`,
     });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        error: "Unable to process ticket"
+        error: "Unable to process ticket",
       },
       {
-        status: 500
+        status: 500,
       }
     );
   }
