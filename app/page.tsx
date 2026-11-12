@@ -7,12 +7,18 @@ export default function HomePage() {
   const [series, setSeries] = useState("Redline Cup Series");
   const [incidentAgainst, setIncidentAgainst] = useState("");
   const [description, setDescription] = useState("");
-  const [videoFile, setVideoFile] =
-  useState<File | null>(null);
+  const [videoFiles, setVideoFiles] =
+  useState<File[]>([]);
 
   async function submitTicket(
-    event: React.FormEvent
-  ) {
+  event: React.FormEvent
+) {
+  event.preventDefault();
+
+  alert(
+    "Video uploads will be connected next."
+  );
+}
     event.preventDefault();
 
     const response = await fetch("/api/tickets", {
@@ -134,14 +140,18 @@ export default function HomePage() {
   <label>Video Clip</label>
   <br />
   <input
-    type="file"
-    accept="video/*"
-    onChange={(e) =>
-      setVideoFile(
-        e.target.files?.[0] || null
-      )
-    }
-  />
+  type="file"
+  accept="video/*"
+  multiple
+  onChange={(e) =>
+    setVideoFiles(
+      Array.from(e.target.files || [])
+    )
+  }
+/>
+<p>
+  {videoFiles.length} file(s) selected
+</p>
 </div>
 
         <button
