@@ -14,11 +14,19 @@ export async function POST(request: Request) {
     if (videos) {
       for (const video of videos) {
         if (video.file_name) {
-          await supabase.storage
-            .from("incident-videos")
-            .remove([
-              video.file_name,
-            ]);
+          const { data, error } =
+  await supabase.storage
+    .from("incident-videos")
+    .remove([
+      video.file_name,
+    ]);
+
+console.log(
+  "DELETE FILE",
+  video.file_name,
+  data,
+  error
+);
         }
       }
     }
