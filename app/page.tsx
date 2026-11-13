@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import { uploadVideo } from "../lib/uploadVideo";
 
 export default function HomePage() {
@@ -10,6 +13,19 @@ export default function HomePage() {
   const [description, setDescription] = useState("");
   const [videoFiles, setVideoFiles] =
   useState<File[]>([]);
+  useEffect(() => {
+  const savedName =
+    localStorage.getItem(
+      "discordName"
+    );
+
+  if (savedName) {
+    setDiscordName(
+      savedName
+    );
+  }
+}, []);
+
 
   async function submitTicket(
   event: React.FormEvent
@@ -43,6 +59,10 @@ export default function HomePage() {
     });
 
     const data = await response.json();
+    localStorage.setItem(
+  "discordName",
+  discordName
+);
 
 await fetch("/api/ticket-videos", {
   method: "POST",

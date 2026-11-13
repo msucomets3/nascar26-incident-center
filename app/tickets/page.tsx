@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import { supabase } from "../../lib/supabase";
 
 export default function TicketLookupPage() {
@@ -10,6 +13,46 @@ export default function TicketLookupPage() {
   useState<any>(null);
   const [videos, setVideos] =
   useState<any[]>([]);
+  const [myTickets, setMyTickets] =
+  useState<any[]>([]);
+
+ useEffect(() => {
+  loadMyTickets();
+}, []);
+
+async function loadMyTickets() {
+  const savedName =
+    localStorage.getItem(
+      "discordName"
+    );
+
+  if (!savedName) {
+    return;
+  }
+
+  setDiscordName(
+    savedName
+  );
+
+  const { data } =
+    await supabase
+      .from("tickets")
+      .select("*")
+      .eq(
+        "discord_name",
+        savedName
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false,
+        }
+      );
+
+  setMyTickets(
+    data || []
+  );
+}
 
   async function lookupTicket(
   event: React.FormEvent
@@ -87,6 +130,92 @@ export default function TicketLookupPage() {
     Home
   </button>
 </div>
+{myTickets.length > 0 && (
+  <div
+    style={{
+      background: "#101b2e",
+      border: "1px solid #24344f",
+      borderRadius: "16px",
+      padding: "2rem",
+      marginBottom: "2rem",
+    }}
+  >
+    <h2
+      style={{
+        color: "#ff4d67",
+      }}
+    >
+      My Tickets
+    </h2>
+
+    {myTickets.map(
+  (ticket) => (
+    <div
+      key={ticket.id}
+      style={{
+        marginBottom: "1rem",
+      }}
+    >
+      <a
+        href="#"
+        onClick={async (e) => {
+          e.preventDefault();
+
+          setTicket(ticket);
+
+          setTicketCode(
+            ticket.ticket_code
+          );
+
+          setDiscordName(
+            ticket.discord_name
+          );
+
+          const {
+            data: videoData,
+          } = await supabase
+            .from(
+              "ticket_videos"
+            )
+            .select("*")
+            .eq(
+              "ticket_id",
+              ticket.id
+            );
+
+          setVideos(
+            videoData || []
+          );
+        }}
+        style={{
+          color: "#ff4d67",
+          fontWeight: "bold",
+          textDecoration:
+            "none",
+          cursor: "pointer",
+        }}
+      >
+        {ticket.ticket_code}
+      </a>
+
+      <br />
+
+      {ticket.status ===
+        "New" &&
+        "🟢 New"}
+
+      {ticket.status ===
+        "Under Review" &&
+        "🟡 Under Review"}
+
+      {ticket.status ===
+        "Decision Pending" &&
+        "🔵 Decision Pending"}
+    </div>
+  )
+)}
+  </div>
+)}
 
       <form
   onSubmit={lookupTicket}
