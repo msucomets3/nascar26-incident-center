@@ -123,7 +123,7 @@ alert(
   </button>
 </a>
 
-  <a href="/admin-login">
+  <a href="/admin">
   <button
     type="button"
     style={{
