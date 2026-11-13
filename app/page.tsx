@@ -87,6 +87,12 @@ alert(
   </a>
 </p>
 
+<p>
+  <a href="/admin-login">
+    Admin Portal
+  </a>
+</p>
+
       <h2>Submit New Incident</h2>
 
       <form onSubmit={submitTicket}>
