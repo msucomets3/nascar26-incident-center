@@ -66,19 +66,35 @@ alert(
 }
 
   return (
-    <main
-      style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        padding: "2rem",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1>NASCAR 26 Incident Center</h1>
+   <main
+  style={{
+    maxWidth: "1000px",
+    margin: "0 auto",
+    padding: "2rem",
+    fontFamily: "Arial, sans-serif",
+    background: "#08111f",
+    color: "white",
+    minHeight: "100vh",
+  }}
+>
+      <h1
+  style={{
+    color: "#ff4d67",
+    fontSize: "3rem",
+    marginBottom: "0.5rem",
+  }}
+>
+  NASCAR 26 INCIDENT CENTER
+</h1>
 
-      <p>
-        Submit incidents for league officials to review.
-      </p>
+     <p
+  style={{
+    color: "#c0c8d4",
+    marginBottom: "2rem",
+  }}
+>
+  AJRabbitGaming Race Control
+</p>
 
       <hr />
       <div
@@ -86,25 +102,56 @@ alert(
     display: "flex",
     gap: "1rem",
     marginTop: "1rem",
-    marginBottom: "1rem",
+    marginBottom: "2rem",
+    flexWrap: "wrap",
   }}
 >
   <a href="/tickets">
-    <button>
-      View Existing Ticket
-    </button>
-  </a>
+  <button
+    type="button"
+    style={{
+      background: "#ff4d67",
+      color: "white",
+      border: "none",
+      borderRadius: "12px",
+      padding: "12px 20px",
+      cursor: "pointer",
+      fontWeight: "bold",
+    }}
+  >
+    View Existing Ticket
+  </button>
+</a>
 
   <a href="/admin-login">
-    <button>
-      Admin Portal
-    </button>
-  </a>
+  <button
+    type="button"
+    style={{
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #ff4d67",
+      borderRadius: "12px",
+      padding: "12px 20px",
+      cursor: "pointer",
+      fontWeight: "bold",
+    }}
+  >
+    Admin Portal
+  </button>
+</a>
 </div>
 
       <h2>Submit New Incident</h2>
 
-      <form onSubmit={submitTicket}>
+      <form
+  onSubmit={submitTicket}
+  style={{
+    background: "#101b2e",
+    padding: "2rem",
+    borderRadius: "16px",
+    border: "1px solid #24344f",
+  }}
+>
         <div style={{ marginBottom: "1rem" }}>
           <label>Discord Name</label>
           <br />
@@ -198,9 +245,14 @@ alert(
         <button
           type="submit"
           style={{
-            padding: "10px 20px",
-            cursor: "pointer",
-          }}
+  background: "#ff4d67",
+  color: "white",
+  border: "none",
+  borderRadius: "12px",
+  padding: "12px 20px",
+  cursor: "pointer",
+  fontWeight: "bold",
+}}
         >
           Submit Incident
         </button>
