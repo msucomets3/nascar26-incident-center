@@ -10,30 +10,27 @@ export default function AdminGuard({
   const [approved, setApproved] =
     useState(false);
 
-  useEffect(() => {
-    const value =
-      localStorage.getItem(
-        "adminApproved"
-      );
+useEffect(() => {
+  const value =
+    localStorage.getItem(
+      "adminApproved"
+    );
 
   if (value === "true") {
-  console.log(
-    "Admin approved"
-  );
+    console.log(
+      "Admin approved"
+    );
 
-  setApproved(true);
-} else {
-  console.log(
-    "Admin denied"
-  );
+    setApproved(true);
+  } else {
+    console.log(
+      "Admin denied"
+    );
 
-  window.location.href =
-    "/admin-login";
-}
-      window.location.href =
-        "/admin-login";
-    }
-  }, []);
+    window.location.href =
+      "/admin-login";
+  }
+}, []);
 
   if (!approved) {
     return null;
