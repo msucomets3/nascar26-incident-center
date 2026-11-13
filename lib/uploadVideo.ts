@@ -20,5 +20,8 @@ export async function uploadVideo(
     .from("incident-videos")
     .getPublicUrl(fileName);
 
-  return publicUrl;
+  return {
+    fileName,
+    publicUrl,
+  };
 }

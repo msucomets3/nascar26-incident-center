@@ -8,9 +8,10 @@ export async function POST(request: Request) {
     const { error } = await supabase
       .from("ticket_videos")
       .insert(
-        body.videos.map((videoUrl: string) => ({
+        body.videos.map((video: any) => ({
           ticket_id: body.ticketId,
-          video_url: videoUrl,
+          video_url: video.publicUrl,
+          file_name: video.fileName,
         }))
       );
 

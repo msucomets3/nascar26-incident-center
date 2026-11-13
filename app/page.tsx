@@ -17,12 +17,16 @@ export default function HomePage() {
   event.preventDefault();
 
   try {
-    const uploadedUrls: string[] = [];
+    const uploadedVideos: any[] = [];
 
     for (const file of videoFiles) {
-      const url = await uploadVideo(file);
-      uploadedUrls.push(url);
-    }
+  const uploadResult =
+    await uploadVideo(file);
+
+  uploadedVideos.push(
+    uploadResult
+  );
+}
 
     const response = await fetch("/api/tickets", {
       method: "POST",
@@ -34,7 +38,7 @@ export default function HomePage() {
         series,
         incidentAgainst,
         description,
-        uploadedUrls,
+        uploadedVideos,
       }),
     });
 
@@ -46,9 +50,9 @@ await fetch("/api/ticket-videos", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    ticketId: data.ticketId,
-    videos: uploadedUrls,
-  }),
+  ticketId: data.ticketId,
+  videos: uploadedVideos,
+}),
 });
 
 alert(
