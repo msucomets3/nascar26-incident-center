@@ -90,7 +90,7 @@ alert(
   style={{
     maxWidth: "1000px",
     margin: "0 auto",
-    padding: "2rem",
+    padding: "1rem",
     fontFamily: "Arial, sans-serif",
     background: "#08111f",
     color: "white",
@@ -100,7 +100,7 @@ alert(
       <h1
   style={{
     color: "#ff4d67",
-    fontSize: "3rem",
+    fontSize: "clamp(1.75rem, 5vw, 3rem)",
     marginBottom: "0.5rem",
   }}
 >
@@ -110,7 +110,7 @@ alert(
      <p
   style={{
     color: "#c0c8d4",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   }}
 >
   AJRabbitGaming Race Control
@@ -121,8 +121,8 @@ alert(
   style={{
     display: "flex",
     gap: "1rem",
-    marginTop: "1rem",
-    marginBottom: "2rem",
+    marginTop: "0.5rem",
+    marginBottom: "1rem",
     flexWrap: "wrap",
   }}
 >
@@ -134,7 +134,7 @@ alert(
       color: "white",
       border: "none",
       borderRadius: "12px",
-      padding: "12px 20px",
+      padding: "10px 16px",
       cursor: "pointer",
       fontWeight: "bold",
     }}
@@ -151,7 +151,7 @@ alert(
       color: "white",
       border: "1px solid #ff4d67",
       borderRadius: "12px",
-      padding: "12px 20px",
+      padding: "10px 16px",
       cursor: "pointer",
       fontWeight: "bold",
     }}
@@ -161,18 +161,26 @@ alert(
 </a>
 </div>
 
-      <h2>Submit New Incident</h2>
+  <h2
+  style={{
+    fontSize: "1.25rem",
+    marginTop: "0.5rem",
+    marginBottom: "0.75rem",
+  }}
+>
+  Submit New Incident
+</h2>
 
       <form
   onSubmit={submitTicket}
   style={{
     background: "#101b2e",
-    padding: "2rem",
+    padding: "1rem",
     borderRadius: "16px",
     border: "1px solid #24344f",
   }}
 >
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "0.5rem" }}>
           <label>Discord Name</label>
           <br />
           <input
@@ -188,7 +196,7 @@ alert(
           />
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "0.5rem" }}>
           <label>Series</label>
           <br />
           <select
@@ -213,7 +221,7 @@ alert(
           </select>
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "0.5rem" }}>
           <label>Incident Against</label>
           <br />
           <input
@@ -229,7 +237,7 @@ alert(
           />
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "0.5rem" }}>
           <label>Description</label>
           <br />
           <textarea
@@ -237,14 +245,14 @@ alert(
             onChange={(e) =>
               setDescription(e.target.value)
             }
-            rows={6}
+            rows={3}
             style={{
               width: "100%",
               padding: "8px",
             }}
           />
         </div>
-        <div style={{ marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "0.5rem" }}>
   <label>Video Clip</label>
   <br />
   <input
@@ -257,9 +265,15 @@ alert(
     )
   }
 />
-<p>
+<div
+  style={{
+    marginTop: "0.25rem",
+    fontSize: "0.9rem",
+    color: "#c0c8d4",
+  }}
+>
   {videoFiles.length} file(s) selected
-</p>
+</div>
 </div>
 
         <button
@@ -269,7 +283,7 @@ alert(
   color: "white",
   border: "none",
   borderRadius: "12px",
-  padding: "12px 20px",
+  padding: "10px 16px",
   cursor: "pointer",
   fontWeight: "bold",
 }}
