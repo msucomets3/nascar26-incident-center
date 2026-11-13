@@ -21,8 +21,9 @@ export async function POST(request: Request) {
       .eq("id", body.ticketId);
 
     return NextResponse.json({
-      success: true,
-    });
+  success: true,
+  ticketId: body.ticketId,
+});
   } catch {
     return NextResponse.json(
       {

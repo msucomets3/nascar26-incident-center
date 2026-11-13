@@ -56,7 +56,9 @@ async function addNote() {
 }
 
 async function closeTicket() {
-  await fetch("/api/close-ticket", {
+  const response = await fetch(
+  "/api/close-ticket",
+  {
     method: "POST",
     headers: {
       "Content-Type":
@@ -65,10 +67,19 @@ async function closeTicket() {
     body: JSON.stringify({
       ticketId: params.id,
     }),
-  });
+  }
+);
 
-  window.location.href =
-    "/admin";
+const data =
+  await response.json();
+
+alert(
+  `Closing: ${data.ticketId}`
+);
+
+window.location.href =
+  "/admin";
+
 }
 
 useEffect(() => {
