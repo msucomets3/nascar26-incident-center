@@ -8,6 +8,8 @@ export default function TicketLookupPage() {
   const [ticketCode, setTicketCode] = useState("");
   const [ticket, setTicket] =
   useState<any>(null);
+  const [videos, setVideos] =
+  useState<any[]>([]);
 
   async function lookupTicket(
   event: React.FormEvent
@@ -22,6 +24,16 @@ export default function TicketLookupPage() {
     .single();
 
   setTicket(data);
+
+  if (data) {
+    const { data: videoData } =
+      await supabase
+        .from("ticket_videos")
+        .select("*")
+        .eq("ticket_id", data.id);
+
+    setVideos(videoData || []);
+  }
 }
 
   return (
@@ -103,6 +115,24 @@ export default function TicketLookupPage() {
       <strong>Description:</strong>{" "}
       {ticket.description}
     </p>
+    <p>
+  <strong>Status:</strong>{" "}
+  {ticket.status}
+</p>
+<hr />
+
+<h3>Uploaded Videos</h3>
+
+{videos.map((video) => (
+  <div key={video.id}>
+    <a
+      href={video.video_url}
+      target="_blank"
+    >
+      Open Video
+    </a>
+  </div>
+))}
   </div>
 )}
     </main>
