@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AdminGuard from "../components/AdminGuard";
 import { supabase } from "../../lib/supabase";
 
 export default function AdminPage() {
@@ -22,6 +23,7 @@ export default function AdminPage() {
   }, []);
 
   return (
+  <AdminGuard>
     <main
       style={{
         maxWidth: "1000px",
@@ -79,6 +81,7 @@ export default function AdminPage() {
 </p>
         </div>
       ))}
-    </main>
+       </main>
+  </AdminGuard>
   );
 }

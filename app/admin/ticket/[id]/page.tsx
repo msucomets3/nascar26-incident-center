@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AdminGuard from "../../../components/AdminGuard";
 import { supabase } from "../../../../lib/supabase";
 
 export default function TicketPage(props: any) {
@@ -84,6 +85,7 @@ useEffect(() => {
   }
 
   return (
+  <AdminGuard>
     <main
       style={{
         maxWidth: "1000px",
@@ -158,5 +160,6 @@ useEffect(() => {
   Close Ticket
 </button>
     </main>
-  );
+</AdminGuard>
+);
 }
