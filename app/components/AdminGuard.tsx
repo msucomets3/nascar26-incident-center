@@ -16,9 +16,20 @@ export default function AdminGuard({
         "adminApproved"
       );
 
-    if (value === "true") {
-      setApproved(true);
-    } else {
+  if (value === "true") {
+  console.log(
+    "Admin approved"
+  );
+
+  setApproved(true);
+} else {
+  console.log(
+    "Admin denied"
+  );
+
+  window.location.href =
+    "/admin-login";
+}
       window.location.href =
         "/admin-login";
     }
