@@ -124,6 +124,24 @@ useEffect(() => {
 </h1>
 <p
   style={{
+    fontWeight: "bold",
+    fontSize: "1.1rem",
+    marginBottom: "1rem",
+  }}
+>
+  {ticket.status === "New" &&
+    "🟢 New"}
+
+  {ticket.status ===
+    "Under Review" &&
+    "🟡 Under Review"}
+
+  {ticket.status ===
+    "Decision Pending" &&
+    "🔵 Decision Pending"}
+</p>
+<p
+  style={{
     color: "#c0c8d4",
     marginBottom: "2rem",
   }}

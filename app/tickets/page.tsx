@@ -182,7 +182,16 @@ export default function TicketLookupPage() {
     </p>
     <p>
   <strong>Status:</strong>{" "}
-  {ticket.status}
+  {ticket.status === "New" &&
+    "🟢 New"}
+
+  {ticket.status ===
+    "Under Review" &&
+    "🟡 Under Review"}
+
+  {ticket.status ===
+    "Decision Pending" &&
+    "🔵 Decision Pending"}
 </p>
 <hr />
 

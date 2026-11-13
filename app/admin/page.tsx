@@ -142,6 +142,23 @@ export default function AdminPage() {
   {ticket.ticket_code}
 </h3>
 
+<p
+  style={{
+    fontWeight: "bold",
+    marginBottom: "1rem",
+  }}
+>
+  {ticket.status === "New" &&
+    "🟢 New"}
+
+  {ticket.status ===
+    "Under Review" &&
+    "🟡 Under Review"}
+
+  {ticket.status ===
+    "Decision Pending" &&
+    "🔵 Decision Pending"}
+</p>
           <p>
             <strong>Reporter:</strong>{" "}
             {ticket.discord_name}
