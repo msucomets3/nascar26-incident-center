@@ -13,6 +13,10 @@ export default function HomePage() {
   const [description, setDescription] = useState("");
   const [videoFiles, setVideoFiles] =
   useState<File[]>([]);
+  const [
+  isSubmitting,
+  setIsSubmitting,
+] = useState(false);
   useEffect(() => {
   const savedName =
     localStorage.getItem(
@@ -31,6 +35,7 @@ export default function HomePage() {
   event: React.FormEvent
 ) {
   event.preventDefault();
+  setIsSubmitting(true);
 
   try {
     const uploadedVideos: any[] = [];
@@ -75,10 +80,12 @@ await fetch("/api/ticket-videos", {
 }),
 });
 
+setIsSubmitting(false);
 alert(
   `Ticket Created: ${data.ticketCode}`
 );
   } catch (error) {
+    setIsSubmitting(false);
     alert(
       "Video upload failed. Please try again."
     );
@@ -290,6 +297,51 @@ alert(
           Submit Incident
         </button>
       </form>
+            {isSubmitting && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background:
+              "rgba(0,0,0,0.8)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent:
+              "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              color: "white",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "3rem",
+                marginBottom:
+                  "1rem",
+              }}
+            >
+              ⏳
+            </div>
+
+            <h2>
+              Creating Incident...
+            </h2>
+
+            <p>
+              Please wait while
+              your report is
+              processed.
+            </p>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

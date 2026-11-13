@@ -15,6 +15,9 @@ const [newNote, setNewNote] =
   useState("");
   const [status, setStatus] =
   useState("");
+  const [isClosing,
+  setIsClosing] =
+  useState(false);
 
 
   async function loadTicket() {
@@ -73,6 +76,7 @@ async function updateStatus() {
 }
 
 async function closeTicket() {
+  setIsClosing(true);
   await fetch(
   "/api/close-ticket",
   {
@@ -347,6 +351,7 @@ useEffect(() => {
 
 <button
   onClick={closeTicket}
+  disabled={isClosing}
   style={{
   background: "#8b0000",
   color: "white",
@@ -359,6 +364,51 @@ useEffect(() => {
 >
   Close Ticket
 </button>
+{isClosing && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background:
+        "rgba(0,0,0,0.8)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent:
+        "center",
+      zIndex: 9999,
+    }}
+  >
+    <div
+      style={{
+        textAlign: "center",
+        color: "white",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "3rem",
+          marginBottom:
+            "1rem",
+        }}
+      >
+        ⏳
+      </div>
+
+      <h2>
+        Closing Ticket...
+      </h2>
+
+      <p>
+        Please wait while the
+        incident is being
+        closed.
+      </p>
+    </div>
+  </div>
+)}
     </main>
 </AdminGuard>
 );
