@@ -262,24 +262,25 @@ useEffect(() => {
   INCIDENT EVIDENCE
 </h2>
 
-  {videos.map((video) => (
+{videos.map((video) => (
   <div
     key={video.id}
     style={{
-      marginBottom: "0.75rem",
+      marginBottom: "1.5rem",
     }}
   >
-    <a
-      href={video.video_url}
-      target="_blank"
+    <video
+      controls
       style={{
-        color: "#ff4d67",
-        fontWeight: "bold",
-        textDecoration: "none",
+        width: "100%",
+        borderRadius: "12px",
+        border: "1px solid #24344f",
       }}
     >
-      ▶ Open Video
-    </a>
+      <source
+        src={video.video_url}
+      />
+    </video>
   </div>
 ))}
       <hr />

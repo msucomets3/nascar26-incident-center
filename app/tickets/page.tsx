@@ -527,22 +527,23 @@ loadMyTickets();
 
 {videos.map((video) => (
   <div
-  key={video.id}
-  style={{
-    marginBottom: "0.75rem",
-  }}
->
-    <a
-  href={video.video_url}
-  target="_blank"
-  style={{
-    color: "#ff4d67",
-    fontWeight: "bold",
-    textDecoration: "none",
-  }}
->
-  ▶ Open Video
-</a>
+    key={video.id}
+    style={{
+      marginBottom: "1.5rem",
+    }}
+  >
+    <video
+      controls
+      style={{
+        width: "100%",
+        borderRadius: "12px",
+        border: "1px solid #24344f",
+      }}
+    >
+      <source
+        src={video.video_url}
+      />
+    </video>
   </div>
 ))}
   </div>
