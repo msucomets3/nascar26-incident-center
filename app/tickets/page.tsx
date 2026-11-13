@@ -65,6 +65,18 @@ export default function TicketLookupPage() {
 >
   AJRabbitGaming Race Control
 </p>
+<p style={{ marginBottom: "2rem" }}>
+  <a
+    href="/"
+    style={{
+      color: "#ff4d67",
+      textDecoration: "none",
+      fontWeight: "bold",
+    }}
+  >
+    ← Back to Home
+  </a>
+</p>
 
       <form
   onSubmit={lookupTicket}
