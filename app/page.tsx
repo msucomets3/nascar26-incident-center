@@ -94,7 +94,6 @@ alert(
     fontFamily: "Arial, sans-serif",
     background: "#08111f",
     color: "white",
-    minHeight: "100vh",
   }}
 >
       <h1
