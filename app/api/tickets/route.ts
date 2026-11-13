@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       series: body.series,
       incident_against: body.incidentAgainst,
       description: body.description,
-      status: "open",
+      status: "New",
     },
   ])
   .select()

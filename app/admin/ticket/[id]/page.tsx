@@ -13,6 +13,9 @@ export default function TicketPage(props: any) {
 
 const [newNote, setNewNote] =
   useState("");
+  const [status, setStatus] =
+  useState("");
+
 
   async function loadTicket() {
     const { data } = await supabase
@@ -22,6 +25,9 @@ const [newNote, setNewNote] =
       .single();
 
     setTicket(data);
+    setStatus(
+  data?.status || ""
+);
 
     const { data: videoData } =
       await supabase
@@ -52,6 +58,16 @@ async function addNote() {
   });
 
   setNewNote("");
+
+  loadTicket();
+}
+async function updateStatus() {
+  await supabase
+    .from("tickets")
+    .update({
+      status,
+    })
+    .eq("id", params.id);
 
   loadTicket();
 }
@@ -171,9 +187,52 @@ useEffect(() => {
         {ticket.description}
       </p>
       <p>
-  <strong>Status:</strong>{" "}
-  {ticket.status}
+  <strong>Status:</strong>
 </p>
+
+<select
+  value={status}
+  onChange={(e) =>
+    setStatus(e.target.value)
+  }
+  style={{
+  padding: "10px",
+  marginBottom: "1rem",
+  background: "#101b2e",
+  color: "white",
+  border: "1px solid #24344f",
+  borderRadius: "12px",
+}}
+>
+  <option>
+    New
+  </option>
+
+  <option>
+    Under Review
+  </option>
+
+  <option>
+    Decision Pending
+  </option>
+</select>
+
+<br />
+
+<button
+  onClick={updateStatus}
+  style={{
+    background: "#13233d",
+    color: "white",
+    border: "1px solid #ff4d67",
+    borderRadius: "12px",
+    padding: "10px 16px",
+    cursor: "pointer",
+    marginBottom: "1rem",
+  }}
+>
+  Update Status
+</button>
 
       <hr />
 
