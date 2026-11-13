@@ -17,6 +17,10 @@ export default function HomePage() {
   isSubmitting,
   setIsSubmitting,
 ] = useState(false);
+const [
+  showLongWaitMessage,
+  setShowLongWaitMessage,
+] = useState(false);
   useEffect(() => {
   const savedName =
     localStorage.getItem(
@@ -36,6 +40,11 @@ export default function HomePage() {
 ) {
   event.preventDefault();
   setIsSubmitting(true);
+  setShowLongWaitMessage(false);
+
+setTimeout(() => {
+  setShowLongWaitMessage(true);
+}, 30000);
 
   try {
     const uploadedVideos: any[] = [];
@@ -81,11 +90,13 @@ await fetch("/api/ticket-videos", {
 });
 
 setIsSubmitting(false);
+setShowLongWaitMessage(false);
 alert(
   `Ticket Created: ${data.ticketCode}`
 );
   } catch (error) {
     setIsSubmitting(false);
+    setShowLongWaitMessage(false);
     alert(
       "Video upload failed. Please try again."
     );
@@ -342,6 +353,21 @@ alert(
               your report is
               processed.
             </p>
+            {showLongWaitMessage && (
+  <p
+    style={{
+      marginTop: "1rem",
+      color: "#c0c8d4",
+      maxWidth: "400px",
+    }}
+  >
+    Slower connections or large
+    video uploads may take
+    several minutes.
+
+    Please do not close this page.
+  </p>
+)}
           </div>
         </div>
       )}
