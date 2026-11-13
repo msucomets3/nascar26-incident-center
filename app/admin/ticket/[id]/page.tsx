@@ -114,19 +114,47 @@ useEffect(() => {
 >
   AJRabbitGaming Incident Review
 </p>
-<p style={{ marginBottom: "2rem" }}>
-  <a
-    href="/admin"
+<div
+  style={{
+    display: "flex",
+    gap: "10px",
+    marginBottom: "2rem",
+  }}
+>
+  <button
+    onClick={() => {
+      window.location.href =
+        "/";
+    }}
     style={{
-      color: "#ff4d67",
-      textDecoration: "none",
-      fontWeight: "bold",
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #24344f",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
     }}
   >
-    ← Back to Dashboard
-  </a>
-</p>
+    Home
+  </button>
 
+  <button
+    onClick={() => {
+      window.location.href =
+        "/admin";
+    }}
+    style={{
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #ff4d67",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
+    }}
+  >
+    Back to Dashboard
+  </button>
+</div>
 
       <p>
         <strong>Reporter:</strong>{" "}

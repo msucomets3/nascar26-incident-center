@@ -54,6 +54,29 @@ export default function AdminPage() {
     RACE CONTROL
   </h1>
 
+  <div
+  style={{
+    display: "flex",
+    gap: "10px",
+  }}
+>
+  <button
+    onClick={() => {
+      window.location.href =
+        "/";
+    }}
+    style={{
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #24344f",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
+    }}
+  >
+    Home
+  </button>
+
   <button
     onClick={() => {
       localStorage.removeItem(
@@ -74,6 +97,7 @@ export default function AdminPage() {
   >
     Logout
   </button>
+</div>
 </div>
 
 <p
