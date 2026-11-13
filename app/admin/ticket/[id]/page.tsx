@@ -7,6 +7,11 @@ export default function TicketPage(props: any) {
   const params = props.params;
   const [ticket, setTicket] = useState<any>(null);
   const [videos, setVideos] = useState<any[]>([]);
+  const [notes, setNotes] =
+  useState<any[]>([]);
+
+const [newNote, setNewNote] =
+  useState("");
 
   async function loadTicket() {
     const { data } = await supabase
@@ -24,11 +29,35 @@ export default function TicketPage(props: any) {
         .eq("ticket_id", params.id);
 
     setVideos(videoData || []);
-  }
+    const { data: notesData } =
+  await supabase
+    .from("admin_notes")
+    .select("*")
+    .eq("ticket_id", params.id);
 
-  useEffect(() => {
-    loadTicket();
-  }, []);
+setNotes(notesData || []);
+}
+
+async function addNote() {
+  await fetch("/api/admin-notes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ticketId: params.id,
+      note: newNote,
+    }),
+  });
+
+  setNewNote("");
+
+  loadTicket();
+}
+
+useEffect(() => {
+  loadTicket();
+}, []);
 
   if (!ticket) {
     return <div>Loading...</div>;
@@ -73,6 +102,28 @@ export default function TicketPage(props: any) {
           </a>
         </div>
       ))}
+      <hr />
+
+<h2>Admin Notes</h2>
+
+{notes.map((note) => (
+  <div key={note.id}>
+    {note.note}
+  </div>
+))}
+
+<textarea
+  value={newNote}
+  onChange={(e) =>
+    setNewNote(e.target.value)
+  }
+/>
+
+<br />
+
+<button onClick={addNote}>
+  Add Note
+</button>
     </main>
   );
 }
