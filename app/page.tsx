@@ -5,6 +5,8 @@ import {
   useState,
 } from "react";
 import { uploadVideo } from "../lib/uploadVideo";
+import { supabase } from "../lib/supabase";
+
 
 export default function HomePage() {
   const [discordName, setDiscordName] = useState("");
@@ -13,6 +15,8 @@ export default function HomePage() {
   const [description, setDescription] = useState("");
   const [videoFiles, setVideoFiles] =
   useState<File[]>([]);
+  const [user, setUser] =
+  useState<any>(null);
   const [
   isSubmitting,
   setIsSubmitting,
@@ -32,8 +36,22 @@ const [
       savedName
     );
   }
+  supabase.auth.getUser()
+  .then(({ data }) => {
+    setUser(data.user);
+  });
 }, []);
 
+async function signInWithDiscord() {
+  await supabase.auth.signInWithOAuth({
+    provider: "discord",
+  });
+}
+
+async function signOut() {
+  await supabase.auth.signOut();
+  setUser(null);
+}
 
   async function submitTicket(
   event: React.FormEvent
@@ -132,6 +150,56 @@ alert(
 >
   AJRabbitGaming Race Control
 </p>
+
+{!user && (
+  <button
+    onClick={signInWithDiscord}
+    style={{
+      background: "#5865F2",
+      color: "white",
+      border: "none",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
+      fontWeight: "bold",
+      marginBottom: "1rem",
+    }}
+  >
+    Sign in with Discord
+  </button>
+)}
+
+{user && (
+  <div
+    style={{
+      marginBottom: "1rem",
+    }}
+  >
+    <p>
+      Logged in as:
+      {" "}
+      {user.user_metadata
+        ?.full_name ||
+       user.user_metadata
+        ?.name ||
+       user.email}
+    </p>
+
+    <button
+      onClick={signOut}
+      style={{
+        background: "#13233d",
+        color: "white",
+        border: "1px solid #5865F2",
+        borderRadius: "12px",
+        padding: "10px 16px",
+        cursor: "pointer",
+      }}
+    >
+      Sign Out
+    </button>
+  </div>
+)}
 
       <hr />
       <div
