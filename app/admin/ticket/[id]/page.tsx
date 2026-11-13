@@ -272,6 +272,7 @@ useEffect(() => {
     <video
       controls
       playsInline
+      preload="metadata"
       style={{
         width: "100%",
         borderRadius: "12px",
