@@ -534,6 +534,7 @@ loadMyTickets();
   >
     <video
       controls
+      playsInline
       style={{
         width: "100%",
         borderRadius: "12px",
