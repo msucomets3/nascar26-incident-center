@@ -86,14 +86,34 @@ useEffect(() => {
 
   return (
   <AdminGuard>
-    <main
-      style={{
-        maxWidth: "1000px",
-        margin: "0 auto",
-        padding: "2rem",
-      }}
-    >
-      <h1>{ticket.ticket_code}</h1>
+   <main
+  style={{
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "2rem",
+    background: "#08111f",
+    color: "white",
+    minHeight: "100vh",
+    fontFamily: "Arial, sans-serif",
+  }}
+>
+      <h1
+  style={{
+    color: "#ff4d67",
+    fontSize: "3rem",
+    marginBottom: "0.5rem",
+  }}
+>
+  {ticket.ticket_code}
+</h1>
+<p
+  style={{
+    color: "#c0c8d4",
+    marginBottom: "2rem",
+  }}
+>
+  AJRabbitGaming Incident Review
+</p>
 
       <p>
         <strong>Reporter:</strong>{" "}
@@ -109,27 +129,62 @@ useEffect(() => {
         <strong>Description:</strong>{" "}
         {ticket.description}
       </p>
+      <p>
+  <strong>Status:</strong>{" "}
+  {ticket.status}
+</p>
 
       <hr />
 
-      <h2>Videos</h2>
+      <h2
+  style={{
+    color: "#ff4d67",
+  }}
+>
+  INCIDENT EVIDENCE
+</h2>
 
-      {videos.map((video) => (
-        <div key={video.id}>
-          <a
-            href={video.video_url}
-            target="_blank"
-          >
-            Open Video
-          </a>
-        </div>
-      ))}
+  {videos.map((video) => (
+  <div
+    key={video.id}
+    style={{
+      marginBottom: "0.75rem",
+    }}
+  >
+    <a
+      href={video.video_url}
+      target="_blank"
+      style={{
+        color: "#ff4d67",
+        fontWeight: "bold",
+        textDecoration: "none",
+      }}
+    >
+      ▶ Open Video
+    </a>
+  </div>
+))}
       <hr />
 
-<h2>Admin Notes</h2>
+<h2
+  style={{
+    color: "#ff4d67",
+  }}
+>
+  STEWARD NOTES
+</h2>
 
 {notes.map((note) => (
-  <div key={note.id}>
+  <div
+    key={note.id}
+    style={{
+      background: "#101b2e",
+      border: "1px solid #24344f",
+      borderRadius: "12px",
+      padding: "12px",
+      marginBottom: "10px",
+    }}
+  >
     {note.note}
   </div>
 ))}
@@ -139,11 +194,31 @@ useEffect(() => {
   onChange={(e) =>
     setNewNote(e.target.value)
   }
+  style={{
+    width: "100%",
+    minHeight: "120px",
+    background: "#08111f",
+    color: "white",
+    border: "1px solid #24344f",
+    borderRadius: "12px",
+    padding: "12px",
+  }}
 />
 
 <br />
 
-<button onClick={addNote}>
+<button
+  onClick={addNote}
+  style={{
+    background: "#ff4d67",
+    color: "white",
+    border: "none",
+    borderRadius: "12px",
+    padding: "10px 16px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  }}
+>
   Add Note
 </button>
 <br />
@@ -152,10 +227,14 @@ useEffect(() => {
 <button
   onClick={closeTicket}
   style={{
-    background: "red",
-    color: "white",
-    padding: "10px",
-  }}
+  background: "#8b0000",
+  color: "white",
+  border: "none",
+  borderRadius: "12px",
+  padding: "10px 16px",
+  cursor: "pointer",
+  fontWeight: "bold",
+}}
 >
   Close Ticket
 </button>
