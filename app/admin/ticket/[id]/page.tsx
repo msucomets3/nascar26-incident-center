@@ -56,7 +56,7 @@ async function addNote() {
 }
 
 async function closeTicket() {
-  const response = await fetch(
+  await fetch(
   "/api/close-ticket",
   {
     method: "POST",
@@ -68,13 +68,6 @@ async function closeTicket() {
       ticketId: params.id,
     }),
   }
-);
-
-const data =
-  await response.json();
-
-alert(
-  `Closing: ${data.ticketId}`
 );
 
 window.location.href =
