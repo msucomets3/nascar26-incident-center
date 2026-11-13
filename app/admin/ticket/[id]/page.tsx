@@ -55,6 +55,22 @@ async function addNote() {
   loadTicket();
 }
 
+async function closeTicket() {
+  await fetch("/api/close-ticket", {
+    method: "POST",
+    headers: {
+      "Content-Type":
+        "application/json",
+    },
+    body: JSON.stringify({
+      ticketId: params.id,
+    }),
+  });
+
+  window.location.href =
+    "/admin";
+}
+
 useEffect(() => {
   loadTicket();
 }, []);
@@ -123,6 +139,19 @@ useEffect(() => {
 
 <button onClick={addNote}>
   Add Note
+</button>
+<br />
+<br />
+
+<button
+  onClick={closeTicket}
+  style={{
+    background: "red",
+    color: "white",
+    padding: "10px",
+  }}
+>
+  Close Ticket
 </button>
     </main>
   );
