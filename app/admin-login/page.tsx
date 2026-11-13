@@ -46,6 +46,18 @@ export default function AdminLogin() {
       }}
     >
       <h1>Admin Portal</h1>
+      <p>
+  <a
+    href="/"
+    style={{
+      color: "#ff4d67",
+      textDecoration: "none",
+      fontWeight: "bold",
+    }}
+  >
+    ← Back to Home
+  </a>
+</p>
 
       <input
         value={code}
