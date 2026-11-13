@@ -186,6 +186,16 @@ async function loadMyTickets() {
           setVideos(
             videoData || []
           );
+          setTimeout(() => {
+  document
+    .getElementById(
+      "ticket-details"
+    )
+    ?.scrollIntoView({
+      behavior: "smooth",
+    });
+}, 100);
+
         }}
         style={{
           color: "#ff4d67",
@@ -273,6 +283,7 @@ async function loadMyTickets() {
       </form>
       {ticket && (
   <div
+    id="ticket-details"
   style={{
     marginTop: "2rem",
     background: "#101b2e",
