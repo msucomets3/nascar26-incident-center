@@ -362,7 +362,9 @@ useEffect(() => {
   fontWeight: "bold",
 }}
 >
-  Close Ticket
+  {isClosing
+  ? "Closing Ticket..."
+  : "Close Ticket"}
 </button>
 {isClosing && (
   <div

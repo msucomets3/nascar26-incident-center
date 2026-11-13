@@ -284,6 +284,7 @@ alert(
 
         <button
           type="submit"
+          disabled={isSubmitting}
           style={{
   background: "#ff4d67",
   color: "white",
@@ -294,7 +295,9 @@ alert(
   fontWeight: "bold",
 }}
         >
-          Submit Incident
+          {isSubmitting
+  ? "Creating Incident..."
+  : "Submit Incident"}
         </button>
       </form>
             {isSubmitting && (
