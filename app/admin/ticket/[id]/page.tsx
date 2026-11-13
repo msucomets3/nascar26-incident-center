@@ -114,6 +114,19 @@ useEffect(() => {
 >
   AJRabbitGaming Incident Review
 </p>
+<p style={{ marginBottom: "2rem" }}>
+  <a
+    href="/admin"
+    style={{
+      color: "#ff4d67",
+      textDecoration: "none",
+      fontWeight: "bold",
+    }}
+  >
+    ← Back to Dashboard
+  </a>
+</p>
+
 
       <p>
         <strong>Reporter:</strong>{" "}
