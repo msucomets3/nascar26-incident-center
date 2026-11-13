@@ -25,44 +25,98 @@ export default function AdminPage() {
   return (
   <AdminGuard>
     <main
-      style={{
-        maxWidth: "1000px",
-        margin: "0 auto",
-        padding: "2rem",
-      }}
-    >
-      <h1>Admin Dashboard</h1>
-      <button
-  onClick={() => {
-    localStorage.removeItem(
-      "adminApproved"
-    );
-
-    window.location.href =
-      "/";
+  style={{
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "2rem",
+    background: "#08111f",
+    color: "white",
+    minHeight: "100vh",
+    fontFamily: "Arial, sans-serif",
   }}
 >
-  Logout
-</button>
 
-      <p>
-        Open Tickets: {tickets.length}
-      </p>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "1rem",
+  }}
+>
+  <h1
+    style={{
+      color: "#ff4d67",
+      fontSize: "3rem",
+      margin: 0,
+    }}
+  >
+    RACE CONTROL
+  </h1>
+
+  <button
+    onClick={() => {
+      localStorage.removeItem(
+        "adminApproved"
+      );
+
+      window.location.href =
+        "/";
+    }}
+    style={{
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #ff4d67",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
+    }}
+  >
+    Logout
+  </button>
+</div>
+
+<p
+  style={{
+    color: "#c0c8d4",
+    marginBottom: "2rem",
+  }}
+>
+  AJRabbitGaming Steward Dashboard
+</p>
+
+      <p
+  style={{
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    color: "#ff4d67",
+  }}
+>
+  OPEN INCIDENTS: {tickets.length}
+</p>
 
       <hr />
 
       {tickets.map((ticket) => (
         <div
-          key={ticket.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "1rem",
-            marginBottom: "1rem",
-          }}
-        >
-          <h3>
-            {ticket.ticket_code}
-          </h3>
+  key={ticket.id}
+  style={{
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "1.5rem",
+    marginBottom: "1rem",
+  }}
+>
+          <h3
+  style={{
+    color: "#ff4d67",
+    fontSize: "1.5rem",
+    marginTop: 0,
+  }}
+>
+  {ticket.ticket_code}
+</h3>
 
           <p>
             <strong>Reporter:</strong>{" "}
@@ -86,10 +140,15 @@ export default function AdminPage() {
           
           <p>
   <a
-    href={`/admin/ticket/${ticket.id}`}
-  >
-    Review Ticket
-  </a>
+  href={`/admin/ticket/${ticket.id}`}
+  style={{
+    color: "#ff4d67",
+    fontWeight: "bold",
+    textDecoration: "none",
+  }}
+>
+  ▶ Review Ticket
+</a>
 </p>
         </div>
       ))}
