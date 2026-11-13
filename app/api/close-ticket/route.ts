@@ -5,6 +5,24 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    const { data: videos } =
+      await supabase
+        .from("ticket_videos")
+        .select("*")
+        .eq("ticket_id", body.ticketId);
+
+    if (videos) {
+      for (const video of videos) {
+        if (video.file_name) {
+          await supabase.storage
+            .from("incident-videos")
+            .remove([
+              video.file_name,
+            ]);
+        }
+      }
+    }
+
     await supabase
       .from("admin_notes")
       .delete()
@@ -21,9 +39,8 @@ export async function POST(request: Request) {
       .eq("id", body.ticketId);
 
     return NextResponse.json({
-  success: true,
-  ticketId: body.ticketId,
-});
+      success: true,
+    });
   } catch {
     return NextResponse.json(
       {
