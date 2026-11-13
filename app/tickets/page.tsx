@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 import { supabase } from "../../lib/supabase";
+import { uploadVideo } from "../../lib/uploadVideo";
 
 export default function TicketLookupPage() {
   const [discordName, setDiscordName] = useState("");
@@ -15,6 +16,16 @@ export default function TicketLookupPage() {
   useState<any[]>([]);
   const [myTickets, setMyTickets] =
   useState<any[]>([]);
+  const [
+  additionalInformation,
+  setAdditionalInformation,
+] = useState("");
+
+const [
+  additionalVideos,
+  setAdditionalVideos,
+] = useState<File[]>([]);
+
 
  useEffect(() => {
   loadMyTickets();
@@ -67,6 +78,9 @@ async function loadMyTickets() {
     .single();
 
   setTicket(data);
+  setAdditionalInformation(
+  data?.additional_information || ""
+);
 
   if (data) {
     const { data: videoData } =
@@ -77,6 +91,77 @@ async function loadMyTickets() {
 
     setVideos(videoData || []);
   }
+}
+
+async function saveAdditionalInfo() {
+  if (!ticket) {
+    return;
+  }
+
+  await supabase
+    .from("tickets")
+    .update({
+      additional_information:
+        additionalInformation,
+    })
+    .eq("id", ticket.id);
+
+  if (
+    additionalVideos.length > 0
+  ) {
+    const uploadedVideos: any[] =
+      [];
+
+    for (const file of additionalVideos) {
+      const uploadResult =
+        await uploadVideo(file);
+
+      uploadedVideos.push(
+        uploadResult
+      );
+    }
+
+    await fetch(
+      "/api/ticket-videos",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          ticketId: ticket.id,
+          videos: uploadedVideos,
+        }),
+      }
+    );
+    const {
+  data: refreshedVideos,
+} = await supabase
+  .from("ticket_videos")
+  .select("*")
+  .eq(
+    "ticket_id",
+    ticket.id
+  );
+
+setVideos(
+  refreshedVideos || []
+);
+  }
+
+  setTicket({
+  ...ticket,
+  additional_information:
+    additionalInformation,
+});
+
+setAdditionalVideos([]);
+alert(
+  "Additional information saved"
+);
+
+loadMyTickets();
 }
 
   return (
@@ -162,6 +247,9 @@ async function loadMyTickets() {
           e.preventDefault();
 
           setTicket(ticket);
+          setAdditionalInformation(
+  ticket.additional_information || ""
+);
 
           setTicketCode(
             ticket.ticket_code
@@ -321,6 +409,16 @@ async function loadMyTickets() {
       {ticket.description}
     </p>
     <p>
+  <strong>
+    Additional Information:
+  </strong>
+</p>
+
+<p>
+  {ticket.additional_information ||
+    "None"}
+</p>
+    <p>
   <strong>Status:</strong>{" "}
   {ticket.status === "New" &&
     "🟢 New"}
@@ -333,6 +431,96 @@ async function loadMyTickets() {
     "Decision Pending" &&
     "🔵 Decision Pending"}
 </p>
+
+{ticket.status !==
+  "Decision Pending" && (
+  <div
+    style={{
+      marginTop: "2rem",
+    }}
+  >
+    <h3>
+      Additional Information
+    </h3>
+
+    <textarea
+      value={
+        additionalInformation
+      }
+      onChange={(e) =>
+        setAdditionalInformation(
+          e.target.value
+        )
+      }
+      style={{
+        width: "100%",
+        minHeight: "120px",
+        padding: "12px",
+      }}
+    />
+
+    <br />
+    <br />
+
+    <label>
+      Additional Evidence
+    </label>
+
+    <br />
+
+    <input
+      type="file"
+      multiple
+      accept="video/*"
+      onChange={(e) =>
+        setAdditionalVideos(
+          Array.from(
+            e.target.files || []
+          )
+        )
+      }
+    />
+
+    <br />
+    <br />
+
+    <button
+      onClick={
+        saveAdditionalInfo
+      }
+      style={{
+        background:
+          "#ff4d67",
+        color: "white",
+        border: "none",
+        borderRadius:
+          "12px",
+        padding:
+          "10px 16px",
+        cursor: "pointer",
+      }}
+    >
+      Save Additional Information
+    </button>
+  </div>
+)}
+
+{ticket.status ===
+  "Decision Pending" && (
+  <div
+    style={{
+      marginTop: "2rem",
+      color: "#c0c8d4",
+    }}
+  >
+    This incident is awaiting
+    a final ruling.
+
+    Additional edits are
+    locked.
+  </div>
+)}
+
 <hr />
 
 <h3>Uploaded Videos</h3>
