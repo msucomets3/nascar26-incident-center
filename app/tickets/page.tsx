@@ -38,15 +38,43 @@ export default function TicketLookupPage() {
 
   return (
     <main
-      style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        padding: "2rem",
-      }}
-    >
-      <h1>Ticket Lookup</h1>
+  style={{
+    maxWidth: "1000px",
+    margin: "0 auto",
+    padding: "2rem",
+    background: "#08111f",
+    color: "white",
+    minHeight: "100vh",
+    fontFamily: "Arial, sans-serif",
+  }}
+>
+      <h1
+  style={{
+    color: "#ff4d67",
+    fontSize: "3rem",
+    marginBottom: "0.5rem",
+  }}
+>
+  TICKET LOOKUP
+</h1>
+<p
+  style={{
+    color: "#c0c8d4",
+    marginBottom: "2rem",
+  }}
+>
+  AJRabbitGaming Race Control
+</p>
 
-      <form onSubmit={lookupTicket}>
+      <form
+  onSubmit={lookupTicket}
+  style={{
+    background: "#101b2e",
+    padding: "2rem",
+    borderRadius: "16px",
+    border: "1px solid #24344f",
+  }}
+>
         <div style={{ marginBottom: "1rem" }}>
           <label>Discord Name</label>
           <br />
@@ -78,23 +106,38 @@ export default function TicketLookupPage() {
         </div>
 
         <button
-          type="submit"
-          style={{
-            padding: "10px 20px",
-          }}
-        >
+  type="submit"
+  style={{
+    background: "#ff4d67",
+    color: "white",
+    border: "none",
+    borderRadius: "12px",
+    padding: "12px 20px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  }}
+>
           Lookup Ticket
         </button>
       </form>
       {ticket && (
   <div
-    style={{
-      marginTop: "2rem",
-      border: "1px solid #ccc",
-      padding: "1rem",
-    }}
-  >
-    <h2>{ticket.ticket_code}</h2>
+  style={{
+    marginTop: "2rem",
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "2rem",
+  }}
+>
+    <h2
+  style={{
+    color: "#ff4d67",
+    fontSize: "2rem",
+  }}
+>
+  {ticket.ticket_code}
+</h2>
 
     <p>
       <strong>Reporter:</strong>{" "}
@@ -124,13 +167,23 @@ export default function TicketLookupPage() {
 <h3>Uploaded Videos</h3>
 
 {videos.map((video) => (
-  <div key={video.id}>
+  <div
+  key={video.id}
+  style={{
+    marginBottom: "0.75rem",
+  }}
+>
     <a
-      href={video.video_url}
-      target="_blank"
-    >
-      Open Video
-    </a>
+  href={video.video_url}
+  target="_blank"
+  style={{
+    color: "#ff4d67",
+    fontWeight: "bold",
+    textDecoration: "none",
+  }}
+>
+  ▶ Open Video
+</a>
   </div>
 ))}
   </div>
