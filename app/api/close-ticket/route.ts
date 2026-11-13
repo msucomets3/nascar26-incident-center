@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
+import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 export async function POST(request: Request) {
   try {
@@ -15,11 +16,11 @@ export async function POST(request: Request) {
       for (const video of videos) {
         if (video.file_name) {
           const { data, error } =
-  await supabase.storage
-    .from("incident-videos")
-    .remove([
-      video.file_name,
-    ]);
+  await supabaseAdmin.storage
+  .from("incident-videos")
+  .remove([
+    video.file_name,
+  ]);
 
 console.log(
   "DELETE FILE",
