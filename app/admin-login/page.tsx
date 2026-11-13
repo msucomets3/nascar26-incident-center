@@ -6,22 +6,36 @@ export default function AdminLogin() {
   const [code, setCode] =
     useState("");
 
-  function login() {
-    if (
-      code ===
-      "NASCAR2026-STEWARD"
-    ) {
-      localStorage.setItem(
-        "adminApproved",
-        "true"
-      );
+ async function login() {
+  const response =
+    await fetch(
+      "/api/admin-login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          code,
+        }),
+      }
+    );
 
-      window.location.href =
-        "/admin";
-    } else {
-      alert("Access Denied");
-    }
+  if (response.ok) {
+    localStorage.setItem(
+      "adminApproved",
+      "true"
+    );
+
+    window.location.href =
+      "/admin";
+  } else {
+    alert(
+      "Access Denied"
+    );
   }
+}
 
   return (
     <main

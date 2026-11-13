@@ -81,17 +81,26 @@ alert(
       </p>
 
       <hr />
-      <p>
+      <div
+  style={{
+    display: "flex",
+    gap: "1rem",
+    marginTop: "1rem",
+    marginBottom: "1rem",
+  }}
+>
   <a href="/tickets">
-    View Existing Ticket
+    <button>
+      View Existing Ticket
+    </button>
   </a>
-</p>
 
-<p>
   <a href="/admin-login">
-    Admin Portal
+    <button>
+      Admin Portal
+    </button>
   </a>
-</p>
+</div>
 
       <h2>Submit New Incident</h2>
 

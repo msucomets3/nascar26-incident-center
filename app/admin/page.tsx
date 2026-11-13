@@ -32,6 +32,18 @@ export default function AdminPage() {
       }}
     >
       <h1>Admin Dashboard</h1>
+      <button
+  onClick={() => {
+    localStorage.removeItem(
+      "adminApproved"
+    );
+
+    window.location.href =
+      "/";
+  }}
+>
+  Logout
+</button>
 
       <p>
         Open Tickets: {tickets.length}
