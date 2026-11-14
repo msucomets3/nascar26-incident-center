@@ -296,8 +296,11 @@ loadMyTickets(user);
           );
 
           setDiscordName(
-            ticket.discord_name
-          );
+  ticket.discord_name?.replace(
+    "#0",
+    ""
+  )
+);
 
           const {
             data: videoData,
