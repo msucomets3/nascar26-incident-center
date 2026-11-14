@@ -223,7 +223,9 @@ loadMyTickets(user);
     marginBottom: "0.5rem",
   }}
 >
-  TICKET LOOKUP
+  {user
+  ? "MY TICKETS"
+  : "TICKET LOOKUP"}
 </h1>
 <p
   style={{
@@ -233,6 +235,59 @@ loadMyTickets(user);
 >
   AJRabbitGaming Race Control
 </p>
+{user && (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      marginBottom: "2rem",
+      padding: "12px",
+      background: "#101b2e",
+      border: "1px solid #24344f",
+      borderRadius: "12px",
+    }}
+  >
+    <img
+      src={
+        user.user_metadata
+          ?.avatar_url ||
+        user.user_metadata
+          ?.picture
+      }
+      alt="Discord Avatar"
+      style={{
+        width: "64px",
+        height: "64px",
+        borderRadius: "50%",
+      }}
+    />
+
+    <div>
+      <div
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        {user.user_metadata
+          ?.full_name ||
+         user.user_metadata
+          ?.global_name ||
+         user.user_metadata
+          ?.name}
+      </div>
+
+      <div
+        style={{
+          color: "#c0c8d4",
+          fontSize: "0.9rem",
+        }}
+      >
+        ✅ Connected to Discord
+      </div>
+    </div>
+  </div>
+)}
 <div
   style={{
     marginBottom: "2rem",
