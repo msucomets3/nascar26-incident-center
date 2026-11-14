@@ -89,10 +89,6 @@ setTimeout(() => {
   );
 }
 
-console.log(
-  "Discord User ID:",
-  user?.id
-);    
 const response = await fetch("/api/tickets", {
       method: "POST",
       headers: {
