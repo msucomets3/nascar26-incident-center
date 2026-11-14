@@ -20,14 +20,16 @@ export async function POST(request: Request) {
     const { data, error } = await supabase
   .from("tickets")
   .insert([
-    {
-      ticket_code: ticketCode,
-      discord_name: body.discordName,
-      series: body.series,
-      incident_against: body.incidentAgainst,
-      description: body.description,
-      status: "New",
-    },
+  {
+  ticket_code: ticketCode,
+  discord_name: body.discordName,
+  discord_user_id:
+    body.discordUserId,
+  series: body.series,
+  incident_against: body.incidentAgainst,
+  description: body.description,
+  status: "New",
+},
   ])
   .select()
   .single();

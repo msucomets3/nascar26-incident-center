@@ -95,12 +95,14 @@ setTimeout(() => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        discordName,
-        series,
-        incidentAgainst,
-        description,
-        uploadedVideos,
-      }),
+  discordName,
+  discordUserId:
+    user?.id || null,
+  series,
+  incidentAgainst,
+  description,
+  uploadedVideos,
+}),
     });
 
     const data = await response.json();
