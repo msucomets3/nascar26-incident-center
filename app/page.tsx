@@ -291,12 +291,15 @@ alert(
   type="text"
   readOnly={!!user}
   style={{
-    width: "100%",
-    padding: "8px",
-    background: user
-      ? "#1a2333"
-      : "white",
-  }}
+  width: "100%",
+  padding: "8px",
+  background: user
+    ? "#1a2333"
+    : "white",
+  color: user
+    ? "white"
+    : "black",
+}}
 />
 
 {user && (
