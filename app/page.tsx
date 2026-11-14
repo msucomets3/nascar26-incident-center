@@ -36,9 +36,22 @@ const [
       savedName
     );
   }
-  supabase.auth.getUser()
+ supabase.auth.getUser()
   .then(({ data }) => {
     setUser(data.user);
+
+    if (data.user) {
+      const discordName =
+        data.user.user_metadata
+          ?.preferred_username ||
+        data.user.user_metadata
+          ?.name ||
+        "";
+
+      setDiscordName(
+        discordName
+      );
+    }
   });
 }, []);
 
@@ -268,17 +281,35 @@ alert(
         <div style={{ marginBottom: "0.5rem" }}>
           <label>Discord Name</label>
           <br />
-          <input
-            value={discordName}
-            onChange={(e) =>
-              setDiscordName(e.target.value)
-            }
-            type="text"
-            style={{
-              width: "100%",
-              padding: "8px",
-            }}
-          />
+ <input
+  value={discordName}
+  onChange={(e) =>
+    setDiscordName(
+      e.target.value
+    )
+  }
+  type="text"
+  readOnly={!!user}
+  style={{
+    width: "100%",
+    padding: "8px",
+    background: user
+      ? "#1a2333"
+      : "white",
+  }}
+/>
+
+{user && (
+  <div
+    style={{
+      fontSize: "0.9rem",
+      color: "#c0c8d4",
+      marginTop: "0.25rem",
+    }}
+  >
+    Discord account connected
+  </div>
+)}
         </div>
 
         <div style={{ marginBottom: "0.5rem" }}>
