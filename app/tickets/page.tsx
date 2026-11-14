@@ -255,6 +255,34 @@ loadMyTickets(user);
     Home
   </button>
 </div>
+{user &&
+  myTickets.length === 0 && (
+    <div
+      style={{
+        background: "#101b2e",
+        border:
+          "1px solid #24344f",
+        borderRadius:
+          "16px",
+        padding: "2rem",
+        marginBottom: "2rem",
+      }}
+    >
+      <h2
+        style={{
+          color: "#ff4d67",
+        }}
+      >
+        My Tickets
+      </h2>
+
+      <p>
+        No incidents have
+        been submitted from
+        this Discord account.
+      </p>
+    </div>
+)}
 {myTickets.length > 0 && (
   <div
     style={{
@@ -358,6 +386,7 @@ loadMyTickets(user);
   </div>
 )}
 
+      {!user && (
       <form
   onSubmit={lookupTicket}
   style={{
@@ -412,7 +441,8 @@ loadMyTickets(user);
           Lookup Ticket
         </button>
       </form>
-      {ticket && (
+      )}
+  {ticket && (
   <div
     id="ticket-details"
   style={{
