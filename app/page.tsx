@@ -192,15 +192,18 @@ alert(
       marginBottom: "1rem",
     }}
   >
-    <p>
-      Logged in as:
-      {" "}
-      {user.user_metadata
-        ?.full_name ||
-       user.user_metadata
-        ?.name ||
-       user.email}
-    </p>
+    <pre
+  style={{
+    whiteSpace: "pre-wrap",
+    fontSize: "12px",
+  }}
+>
+  {JSON.stringify(
+    user.user_metadata,
+    null,
+    2
+  )}
+</pre>
 
     <button
       onClick={signOut}
