@@ -41,12 +41,14 @@ const [
     setUser(data.user);
 
     if (data.user) {
-      const discordName =
-        data.user.user_metadata
-          ?.preferred_username ||
-        data.user.user_metadata
-          ?.name ||
-        "";
+const discordName =
+  (
+    data.user.user_metadata
+      ?.preferred_username ||
+    data.user.user_metadata
+      ?.name ||
+    ""
+  ).replace("#0", "");
 
       setDiscordName(
         discordName

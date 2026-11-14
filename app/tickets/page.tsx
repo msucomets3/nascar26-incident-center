@@ -16,6 +16,8 @@ export default function TicketLookupPage() {
   useState<any[]>([]);
   const [myTickets, setMyTickets] =
   useState<any[]>([]);
+  const [user, setUser] =
+  useState<any>(null);
   const [
   additionalInformation,
   setAdditionalInformation,
@@ -27,15 +29,53 @@ const [
 ] = useState<File[]>([]);
 
 
- useEffect(() => {
-  loadMyTickets();
+useEffect(() => {
+  async function initialize() {
+    const {
+      data: { user },
+    } =
+      await supabase.auth.getUser();
+
+    setUser(user);
+
+    loadMyTickets(user);
+  }
+
+  initialize();
 }, []);
 
-async function loadMyTickets() {
+async function loadMyTickets(
+  currentUser?: any
+) {
   const savedName =
     localStorage.getItem(
       "discordName"
     );
+
+    if (
+  currentUser?.id
+) {
+  const { data } =
+    await supabase
+      .from("tickets")
+      .select("*")
+      .eq(
+  "discord_user_id",
+  currentUser.id
+)
+.order(
+  "created_at",
+  {
+    ascending: false,
+  }
+);
+
+setMyTickets(
+  data || []
+);
+
+return;
+}
 
   if (!savedName) {
     return;
@@ -161,7 +201,7 @@ alert(
   "Additional information saved"
 );
 
-loadMyTickets();
+loadMyTickets(user);
 }
 
   return (
@@ -391,7 +431,10 @@ loadMyTickets();
 
     <p>
       <strong>Reporter:</strong>{" "}
-      {ticket.discord_name}
+      {ticket.discord_name?.replace(
+  "#0",
+  ""
+)}
     </p>
 
     <p>
