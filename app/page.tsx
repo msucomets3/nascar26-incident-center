@@ -278,42 +278,54 @@ alert(
     border: "1px solid #24344f",
   }}
 >
-        <div style={{ marginBottom: "0.5rem" }}>
-          <label>Discord Name</label>
-          <br />
- <input
-  value={discordName}
-  onChange={(e) =>
-    setDiscordName(
-      e.target.value
-    )
-  }
-  type="text"
-  readOnly={!!user}
-  style={{
-  width: "100%",
-  padding: "8px",
-  background: user
-    ? "#1a2333"
-    : "white",
-  color: user
-    ? "white"
-    : "black",
-}}
-/>
+<div style={{ marginBottom: "0.5rem" }}>
+  {!user && (
+    <>
+      <label>Discord Name</label>
+      <br />
+      <input
+        value={discordName}
+        onChange={(e) =>
+          setDiscordName(
+            e.target.value
+          )
+        }
+        type="text"
+        style={{
+          width: "100%",
+          padding: "8px",
+        }}
+      />
+    </>
+  )}
 
-{user && (
-  <div
-    style={{
-      fontSize: "0.9rem",
-      color: "#c0c8d4",
-      marginTop: "0.25rem",
-    }}
-  >
-    Discord account connected
-  </div>
-)}
-        </div>
+  {user && (
+    <>
+      <label>
+        Discord Account
+      </label>
+      <br />
+
+      <div
+        style={{
+          width: "100%",
+          padding: "8px",
+          background: "white",
+          color: "black",
+          borderRadius: "2px",
+          boxSizing:
+            "border-box",
+        }}
+      >
+        ✅ Connected as{" "}
+        {discordName.replace(
+          "#0",
+          ""
+        )}
+      </div>
+    </>
+  )}
+</div>
 
         <div style={{ marginBottom: "0.5rem" }}>
           <label>Series</label>
