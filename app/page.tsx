@@ -192,32 +192,77 @@ alert(
       marginBottom: "1rem",
     }}
   >
-    <pre
+
+<div
   style={{
-    whiteSpace: "pre-wrap",
-    fontSize: "12px",
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "1rem",
+    padding: "12px",
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "12px",
   }}
 >
-  {JSON.stringify(
-    user.user_metadata,
-    null,
-    2
-  )}
-</pre>
+  <img
+    src={
+      user.user_metadata
+        ?.avatar_url ||
+      user.user_metadata
+        ?.picture
+    }
+    alt="Discord Avatar"
+    style={{
+      width: "64px",
+      height: "64px",
+      borderRadius: "50%",
+    }}
+  />
 
-    <button
-      onClick={signOut}
+  <div
+    style={{
+      flex: 1,
+    }}
+  >
+    <div
       style={{
-        background: "#13233d",
-        color: "white",
-        border: "1px solid #5865F2",
-        borderRadius: "12px",
-        padding: "10px 16px",
-        cursor: "pointer",
+        fontWeight: "bold",
       }}
     >
-      Sign Out
-    </button>
+      {user.user_metadata
+        ?.full_name ||
+       user.user_metadata
+        ?.global_name ||
+       user.user_metadata
+        ?.name}
+    </div>
+
+    <div
+      style={{
+        color: "#c0c8d4",
+        fontSize: "0.9rem",
+      }}
+    >
+      ✅ Connected to Discord
+    </div>
+  </div>
+
+  <button
+    onClick={signOut}
+    style={{
+      background: "#13233d",
+      color: "white",
+      border: "1px solid #5865F2",
+      borderRadius: "12px",
+      padding: "10px 16px",
+      cursor: "pointer",
+    }}
+  >
+    Sign Out
+  </button>
+</div>
+
   </div>
 )}
 
