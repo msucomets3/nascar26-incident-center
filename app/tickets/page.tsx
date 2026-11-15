@@ -298,6 +298,17 @@ async function sendMessage() {
     return;
   }
 
+  const uploadedFiles: any[] =
+  [];
+
+for (const file of messageFiles) {
+  const uploadResult =
+    await uploadVideo(file);
+
+  uploadedFiles.push(
+    uploadResult
+  );
+}
   await fetch(
     "/api/ticket-message",
     {
@@ -316,6 +327,8 @@ async function sendMessage() {
           "driver",
         message:
           newMessage,
+          attachmentUrls:
+  uploadedFiles,
       }),
     }
   );
@@ -323,7 +336,9 @@ async function sendMessage() {
   await loadMessages(
   ticket.id
 );
-  setNewMessage("");
+setNewMessage("");
+
+setMessageFiles([]);
 }
 
   return (
