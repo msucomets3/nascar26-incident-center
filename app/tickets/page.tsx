@@ -519,7 +519,10 @@ loadMyTickets(user);
 
     <p>
       <strong>Reporter:</strong>{" "}
-      {ticket.discord_name?.replace(
+{(
+  ticket.display_name ||
+  ticket.discord_name
+)?.replace(
   "#0",
   ""
 )}

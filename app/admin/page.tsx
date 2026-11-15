@@ -172,9 +172,10 @@ export default function AdminPage() {
             </p>
 
             <p>
-              <strong>Reporter:</strong>{" "}
-              {ticket.discord_name}
-            </p>
+  <strong>Reporter:</strong>{" "}
+  {ticket.display_name ||
+    ticket.discord_name}
+</p>
 
             <p>
               <strong>Against:</strong>{" "}
