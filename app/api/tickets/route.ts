@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
+import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
 
 function generateTicketCode() {
   return (
@@ -18,21 +19,23 @@ export async function POST(request: Request) {
     const ticketCode = generateTicketCode();
 
     const { data, error } = await supabase
-  .from("tickets")
-  .insert([
-  {
-  ticket_code: ticketCode,
-  discord_name: body.discordName,
-  discord_user_id:
-    body.discordUserId,
-  series: body.series,
-  incident_against: body.incidentAgainst,
-  description: body.description,
-  status: "New",
-},
-  ])
-  .select()
-  .single();
+      .from("tickets")
+      .insert([
+        {
+          ticket_code: ticketCode,
+          discord_name: body.discordName,
+          discord_user_id:
+            body.discordUserId,
+          series: body.series,
+          incident_against:
+            body.incidentAgainst,
+          description:
+            body.description,
+          status: "New",
+        },
+      ])
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
@@ -48,16 +51,29 @@ export async function POST(request: Request) {
       );
     }
 
+    await sendDiscordMessage(
+      `🚨 New Incident Submitted
+
+Ticket: ${ticketCode}
+
+Reporter: ${body.discordName}
+
+Series: ${body.series}`,
+      process.env
+        .DISCORD_PENALTY_CHANNEL_ID
+    );
+
     return NextResponse.json({
-  success: true,
-  ticketId: data.id,
-  ticketCode,
-});
+      success: true,
+      ticketId: data.id,
+      ticketCode,
+    });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        error: "Unable to process ticket",
+        error:
+          "Unable to process ticket",
       },
       {
         status: 500,
