@@ -22,13 +22,13 @@ export default function AdminGuard({
         await supabase.auth.getUser();
 
       if (!user) {
-await supabase.auth.signInWithOAuth({
-  provider: "discord",
-  options: {
-    redirectTo:
-      `${window.location.origin}/admin`,
-  },
-});
+        await supabase.auth.signInWithOAuth({
+          provider: "discord",
+          options: {
+            redirectTo:
+              `${window.location.origin}/admin`,
+          },
+        });
 
         return;
       }
@@ -57,7 +57,7 @@ await supabase.auth.signInWithOAuth({
         setApproved(true);
       } else {
         alert(
-          "Penalty Admin role required."
+          "Access denied.\n\nYour Discord account does not have the required AJRabbitGaming permissions."
         );
 
         window.location.href = "/";
