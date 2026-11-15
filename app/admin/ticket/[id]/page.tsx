@@ -91,18 +91,25 @@ if (authData.user) {
 
     setVideos(videoData || []);
 
-const messageResponse =
-  await fetch(
-    `/api/ticket-message?ticketId=${params.id}`
-  );
-
-const messageData =
-  await messageResponse.json();
-
-setMessages(
-  messageData.messages ||
-  []
+await loadMessages(
+  params.id
 );
+}
+
+async function loadMessages(
+  ticketId: string
+) {
+  const response =
+    await fetch(
+      `/api/ticket-message?ticketId=${ticketId}`
+    );
+
+  const data =
+    await response.json();
+
+  setMessages(
+    data.messages || []
+  );
 }
 
 async function sendMessage() {
@@ -130,9 +137,12 @@ async function sendMessage() {
     }
   );
 
-  setNewMessage("");
+setNewMessage("");
 
-  loadTicket();
+await loadMessages(
+  params.id
+);
+
 }
 
 async function updateStatus() {
@@ -178,6 +188,24 @@ window.location.href =
 useEffect(() => {
   loadTicket();
 }, []);
+
+useEffect(() => {
+  if (!ticket) {
+    return;
+  }
+
+  const interval =
+    setInterval(() => {
+      loadMessages(
+        ticket.id
+      );
+    }, 5000);
+
+  return () =>
+    clearInterval(
+      interval
+    );
+}, [ticket]);
 
   if (!ticket) {
     return <div>Loading...</div>;

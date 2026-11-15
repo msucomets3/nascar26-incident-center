@@ -88,6 +88,24 @@ useEffect(() => {
   initialize();
 }, []);
 
+useEffect(() => {
+  if (!ticket) {
+    return;
+  }
+
+  const interval =
+    setInterval(() => {
+      loadMessages(
+        ticket.id
+      );
+    }, 5000);
+
+  return () =>
+    clearInterval(
+      interval
+    );
+}, [ticket]);
+
 async function loadMyTickets(
   currentUser?: any
 ) {
@@ -175,17 +193,9 @@ if (data) {
 
   setVideos(videoData || []);
 
-  const messageResponse =
-    await fetch(
-      `/api/ticket-message?ticketId=${data.id}`
-    );
-
-  const messageData =
-    await messageResponse.json();
-
-  setMessages(
-    messageData.messages || []
-  );
+  await loadMessages(
+  data.id
+);
 }
 }
 
@@ -260,6 +270,22 @@ alert(
 loadMyTickets(user);
 }
 
+async function loadMessages(
+  ticketId: string
+) {
+  const response =
+    await fetch(
+      `/api/ticket-message?ticketId=${ticketId}`
+    );
+
+  const data =
+    await response.json();
+
+  setMessages(
+    data.messages || []
+  );
+}
+
 async function sendMessage() {
   if (
     !newMessage.trim() ||
@@ -290,18 +316,9 @@ async function sendMessage() {
     }
   );
 
-  const response =
-    await fetch(
-      `/api/ticket-message?ticketId=${ticket.id}`
-    );
-
-  const data =
-    await response.json();
-
-  setMessages(
-    data.messages || []
-  );
-
+  await loadMessages(
+  ticket.id
+);
   setNewMessage("");
 }
 
@@ -502,17 +519,8 @@ async function sendMessage() {
           setVideos(
             videoData || []
           );
-          const messageResponse =
-  await fetch(
-    `/api/ticket-message?ticketId=${ticket.id}`
-  );
-
-const messageData =
-  await messageResponse.json();
-
-setMessages(
-  messageData.messages ||
-  []
+          await loadMessages(
+  ticket.id
 );
           setTimeout(() => {
   document
