@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
 import { sendDiscordDM } from "../../../lib/sendDiscordDM";
+import { getDiscordNickname } from "../../../lib/getDiscordNickname";
 
 function generateTicketCode() {
   return (
@@ -19,23 +20,33 @@ export async function POST(request: Request) {
 
     const ticketCode = generateTicketCode();
 
+    const displayName =
+      body.discordProviderId
+        ? await getDiscordNickname(
+            body.discordProviderId
+          )
+        : null;
+
     const { data, error } = await supabase
       .from("tickets")
       .insert([
-{
-  ticket_code: ticketCode,
-  discord_name: body.discordName,
-  discord_user_id:
-    body.discordUserId,
-  discord_provider_id:
-    body.discordProviderId,
-  series: body.series,
-  incident_against:
-    body.incidentAgainst,
-  description:
-    body.description,
-  status: "New",
-},
+        {
+          ticket_code: ticketCode,
+          discord_name:
+            body.discordName,
+          discord_user_id:
+            body.discordUserId,
+          discord_provider_id:
+            body.discordProviderId,
+          display_name:
+            displayName,
+          series: body.series,
+          incident_against:
+            body.incidentAgainst,
+          description:
+            body.description,
+          status: "New",
+        },
       ])
       .select()
       .single();
@@ -59,7 +70,10 @@ export async function POST(request: Request) {
 
 Ticket: ${ticketCode}
 
-Reporter: ${body.discordName}
+Reporter: ${
+        displayName ||
+        body.discordName
+      }
 
 Series: ${body.series}`,
       process.env
@@ -67,8 +81,8 @@ Series: ${body.series}`,
     );
 
     await sendDiscordDM(
-  body.discordProviderId,
-  `✅ Incident Submitted
+      body.discordProviderId,
+      `✅ Incident Submitted
 
 Ticket: ${ticketCode}
 
@@ -77,7 +91,7 @@ Series: ${body.series}
 Your incident report has been received by Race Control.
 
 You can monitor the status of this incident through the Incident Center.`
-);
+    );
 
     return NextResponse.json({
       success: true,
