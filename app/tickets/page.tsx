@@ -843,6 +843,30 @@ setMessageFiles([]);
             message.message
           }
         </div>
+        {message.attachment_urls?.map(
+  (
+    file: any,
+    index: number
+  ) => (
+    <div
+      key={index}
+      style={{
+        marginTop: "10px",
+      }}
+    >
+      <a
+        href={file.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "#7dd3fc",
+        }}
+      >
+        📎 {file.fileName}
+      </a>
+    </div>
+  )
+)}
       </div>
     )
   )}
