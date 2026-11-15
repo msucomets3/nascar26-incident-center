@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
+import { sendDiscordDM } from "../../../lib/sendDiscordDM";
 
 function generateTicketCode() {
   return (
@@ -64,6 +65,19 @@ Series: ${body.series}`,
       process.env
         .DISCORD_PENALTY_CHANNEL_ID
     );
+
+    await sendDiscordDM(
+  body.discordProviderId,
+  `✅ Incident Submitted
+
+Ticket: ${ticketCode}
+
+Series: ${body.series}
+
+Your incident report has been received by Race Control.
+
+You can monitor the status of this incident through the Incident Center.`
+);
 
     return NextResponse.json({
       success: true,
