@@ -22,11 +22,13 @@ export default function AdminGuard({
         await supabase.auth.getUser();
 
       if (!user) {
-        await supabase.auth.signInWithOAuth(
-          {
-            provider: "discord",
-          }
-        );
+await supabase.auth.signInWithOAuth({
+  provider: "discord",
+  options: {
+    redirectTo:
+      `${window.location.origin}/admin`,
+  },
+});
 
         return;
       }
