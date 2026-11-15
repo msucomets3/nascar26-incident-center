@@ -16,15 +16,15 @@ export async function POST(request: Request) {
 
     if (ticket?.discord_provider_id) {
       await sendDiscordDM(
-        ticket.discord_provider_id,
-        `✅ Ruling Issued
+  ticket.discord_provider_id,
+  `✅ Ruling Issued
 
 Ticket: ${ticket.ticket_code}
 
 A final ruling has been posted.
 
-Please visit the Incident Center to review the outcome.`
-      );
+Please visit #league-announcements to review the outcome.`
+);
     }
 
     const { data: videos } =
