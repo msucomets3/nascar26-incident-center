@@ -8,11 +8,16 @@ export default function TicketPage(props: any) {
   const params = props.params;
   const [ticket, setTicket] = useState<any>(null);
   const [videos, setVideos] = useState<any[]>([]);
-  const [notes, setNotes] =
-  useState<any[]>([]);
+  const [
+  messages,
+  setMessages,
+] = useState<any[]>([]);
 
-const [newNote, setNewNote] =
-  useState("");
+const [
+  newMessage,
+  setNewMessage,
+] = useState("");
+
   const [status, setStatus] =
   useState("");
   const [isClosing,
@@ -39,31 +44,52 @@ const [newNote, setNewNote] =
         .eq("ticket_id", params.id);
 
     setVideos(videoData || []);
-    const { data: notesData } =
-  await supabase
-    .from("admin_notes")
-    .select("*")
-    .eq("ticket_id", params.id);
 
-setNotes(notesData || []);
+const messageResponse =
+  await fetch(
+    `/api/ticket-message?ticketId=${params.id}`
+  );
+
+const messageData =
+  await messageResponse.json();
+
+setMessages(
+  messageData.messages ||
+  []
+);
 }
 
-async function addNote() {
-  await fetch("/api/admin-notes", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ticketId: params.id,
-      note: newNote,
-    }),
-  });
+async function sendMessage() {
+  if (!newMessage.trim()) {
+    return;
+  }
 
-  setNewNote("");
+  await fetch(
+    "/api/ticket-message",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        ticketId: params.id,
+        authorName:
+          ticket.display_name ||
+          ticket.discord_name,
+        authorType:
+          "admin",
+        message:
+          newMessage,
+      }),
+    }
+  );
+
+  setNewMessage("");
 
   loadTicket();
 }
+
 async function updateStatus() {
   await fetch(
     "/api/update-ticket-status",
@@ -305,55 +331,113 @@ useEffect(() => {
     color: "#ff4d67",
   }}
 >
-  STEWARD NOTES
+  CONVERSATION
 </h2>
 
-{notes.map((note) => (
-  <div
-    key={note.id}
-    style={{
-      background: "#101b2e",
-      border: "1px solid #24344f",
-      borderRadius: "12px",
-      padding: "12px",
-      marginBottom: "10px",
-    }}
-  >
-    {note.note}
-  </div>
-))}
+<div
+  style={{
+    marginBottom: "1rem",
+  }}
+>
+  {messages.map(
+    (message) => (
+      <div
+        key={message.id}
+        style={{
+          background:
+            message.author_type ===
+            "admin"
+              ? "#13233d"
+              : "#101b2e",
+          border:
+            "1px solid #24344f",
+          borderRadius:
+            "12px",
+          padding:
+            "12px",
+          marginBottom:
+            "10px",
+        }}
+      >
+        <div
+          style={{
+            fontWeight:
+              "bold",
+            marginBottom:
+              "6px",
+          }}
+        >
+          {
+            message.author_name
+          }
+        </div>
+
+        <div>
+          {
+            message.message
+          }
+        </div>
+      </div>
+    )
+  )}
+</div>
 
 <textarea
-  value={newNote}
+  value={newMessage}
   onChange={(e) =>
-    setNewNote(e.target.value)
+    setNewMessage(
+      e.target.value
+    )
   }
+  onKeyDown={(e) => {
+    if (
+      e.key ===
+        "Enter" &&
+      !e.shiftKey
+    ) {
+      e.preventDefault();
+
+      sendMessage();
+    }
+  }}
+  placeholder="Type a message..."
   style={{
     width: "100%",
-    minHeight: "120px",
-    background: "#08111f",
+    minHeight:
+      "100px",
+    background:
+      "#08111f",
     color: "white",
-    border: "1px solid #24344f",
-    borderRadius: "12px",
-    padding: "12px",
+    border:
+      "1px solid #24344f",
+    borderRadius:
+      "12px",
+    padding:
+      "12px",
   }}
 />
 
 <br />
+<br />
 
 <button
-  onClick={addNote}
+  onClick={sendMessage}
   style={{
-    background: "#ff4d67",
+    background:
+      "#ff4d67",
     color: "white",
     border: "none",
-    borderRadius: "12px",
-    padding: "10px 16px",
-    cursor: "pointer",
-    fontWeight: "bold",
+    borderRadius:
+      "12px",
+    padding:
+      "10px 16px",
+    cursor:
+      "pointer",
+    fontWeight:
+      "bold",
   }}
 >
-  Add Note
+  Send Message
 </button>
 <br />
 <br />
