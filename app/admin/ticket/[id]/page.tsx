@@ -7,6 +7,14 @@ import { supabase } from "../../../../lib/supabase";
 export default function TicketPage(props: any) {
   const params = props.params;
   const [ticket, setTicket] = useState<any>(null);
+  const [user, setUser] =
+  useState<any>(null);
+
+const [
+  stewardName,
+  setStewardName,
+] = useState("");
+
   const [videos, setVideos] = useState<any[]>([]);
   const [
   messages,
@@ -33,6 +41,44 @@ const [
       .single();
 
     setTicket(data);
+    const {
+  data: authData,
+} =
+  await supabase.auth.getUser();
+
+setUser(authData.user);
+
+if (authData.user) {
+  const response =
+    await fetch(
+      "/api/discord-display-name",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          discordProviderId:
+            authData.user
+              .user_metadata
+              ?.provider_id ||
+            authData.user
+              .user_metadata
+              ?.sub,
+        }),
+      }
+    );
+
+  const profile =
+    await response.json();
+
+  if (profile.success) {
+    setStewardName(
+      profile.displayName
+    );
+  }
+}
     setStatus(
   data?.status || ""
 );
@@ -75,8 +121,7 @@ async function sendMessage() {
       body: JSON.stringify({
         ticketId: params.id,
         authorName:
-          ticket.display_name ||
-          ticket.discord_name,
+  stewardName,
         authorType:
           "admin",
         message:
