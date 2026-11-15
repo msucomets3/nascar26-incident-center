@@ -11,18 +11,20 @@ export async function POST(
     const { error } =
       await supabase
         .from("ticket_messages")
-        .insert([
-          {
-            ticket_id:
-              body.ticketId,
-            author_name:
-              body.authorName,
-            author_type:
-              body.authorType,
-            message:
-              body.message,
-          },
-        ]);
+.insert([
+  {
+    ticket_id:
+      body.ticketId,
+    author_name:
+      body.authorName,
+    author_type:
+      body.authorType,
+    message:
+      body.message,
+    attachment_urls:
+      body.attachmentUrls || [],
+  },
+]);
 
     if (error) {
       return NextResponse.json(

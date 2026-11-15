@@ -23,6 +23,10 @@ const [
   newMessage,
   setNewMessage,
 ] = useState("");
+const [
+  messageFiles,
+  setMessageFiles,
+] = useState<File[]>([]);
 
 const [
   displayName,
@@ -859,6 +863,22 @@ async function sendMessage() {
           "12px",
       }}
     />
+
+    <br />
+<br />
+
+<input
+  type="file"
+  multiple
+  accept="video/*,image/*"
+  onChange={(e) =>
+    setMessageFiles(
+      Array.from(
+        e.target.files || []
+      )
+    )
+  }
+/>
 
     <br />
     <br />
