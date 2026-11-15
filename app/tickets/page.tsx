@@ -854,14 +854,14 @@ setMessageFiles([]);
         marginTop: "10px",
       }}
     >
-      <a
-        href={file.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#7dd3fc",
-        }}
-      >
+<a
+  href={file.publicUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    color: "#7dd3fc",
+  }}
+>
         📎 {file.fileName}
       </a>
     </div>
