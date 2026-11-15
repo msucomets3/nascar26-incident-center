@@ -18,6 +18,11 @@ export default function HomePage() {
   const [user, setUser] =
   useState<any>(null);
   const [
+  displayName,
+  setDisplayName,
+] = useState("");
+
+  const [
   isSubmitting,
   setIsSubmitting,
 ] = useState(false);
@@ -25,7 +30,7 @@ const [
   showLongWaitMessage,
   setShowLongWaitMessage,
 ] = useState(false);
-  useEffect(() => {
+useEffect(() => {
   const savedName =
     localStorage.getItem(
       "discordName"
@@ -36,25 +41,59 @@ const [
       savedName
     );
   }
- supabase.auth.getUser()
-  .then(({ data }) => {
+
+  async function loadUser() {
+    const {
+      data,
+    } = await supabase.auth.getUser();
+
     setUser(data.user);
 
     if (data.user) {
-const discordName =
-  (
-    data.user.user_metadata
-      ?.preferred_username ||
-    data.user.user_metadata
-      ?.name ||
-    ""
-  ).replace("#0", "");
+      const response =
+        await fetch(
+          "/api/discord-display-name",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              discordProviderId:
+                data.user.user_metadata
+                  ?.provider_id ||
+                data.user.user_metadata
+                  ?.sub,
+            }),
+          }
+        );
+
+      const result =
+        await response.json();
+
+      if (result.success) {
+        setDisplayName(
+          result.displayName
+        );
+      }
+
+      const discordName =
+        (
+          data.user.user_metadata
+            ?.preferred_username ||
+          data.user.user_metadata
+            ?.name ||
+          ""
+        ).replace("#0", "");
 
       setDiscordName(
         discordName
       );
     }
-  });
+  }
+
+  loadUser();
 }, []);
 
 async function signInWithDiscord() {
@@ -236,12 +275,13 @@ alert(
         fontWeight: "bold",
       }}
     >
-      {user.user_metadata
-        ?.full_name ||
-       user.user_metadata
-        ?.global_name ||
-       user.user_metadata
-        ?.name}
+{displayName ||
+ user.user_metadata
+  ?.full_name ||
+ user.user_metadata
+  ?.global_name ||
+ user.user_metadata
+  ?.name}
     </div>
 
     <div
@@ -375,11 +415,12 @@ alert(
             "border-box",
         }}
       >
-        ✅ Connected as{" "}
-        {discordName.replace(
-          "#0",
-          ""
-        )}
+✅ Connected as{" "}
+{displayName ||
+  discordName.replace(
+    "#0",
+    ""
+  )}
       </div>
     </>
   )}
