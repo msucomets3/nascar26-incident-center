@@ -1,10 +1,31 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 import { supabaseAdmin } from "../../../lib/supabaseAdmin";
+import { sendDiscordDM } from "../../../lib/sendDiscordDM";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
+    const { data: ticket } =
+      await supabase
+        .from("tickets")
+        .select("*")
+        .eq("id", body.ticketId)
+        .single();
+
+    if (ticket?.discord_provider_id) {
+      await sendDiscordDM(
+        ticket.discord_provider_id,
+        `✅ Ruling Issued
+
+Ticket: ${ticket.ticket_code}
+
+A final ruling has been posted.
+
+Please visit the Incident Center to review the outcome.`
+      );
+    }
 
     const { data: videos } =
       await supabase
@@ -16,18 +37,18 @@ export async function POST(request: Request) {
       for (const video of videos) {
         if (video.file_name) {
           const { data, error } =
-  await supabaseAdmin.storage
-  .from("incident-videos")
-  .remove([
-    video.file_name,
-  ]);
+            await supabaseAdmin.storage
+              .from("incident-videos")
+              .remove([
+                video.file_name,
+              ]);
 
-console.log(
-  "DELETE FILE",
-  video.file_name,
-  data,
-  error
-);
+          console.log(
+            "DELETE FILE",
+            video.file_name,
+            data,
+            error
+          );
         }
       }
     }
