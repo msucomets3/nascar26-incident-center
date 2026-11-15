@@ -96,10 +96,16 @@ const response = await fetch("/api/tickets", {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
+body: JSON.stringify({
   discordName,
   discordUserId:
     user?.id || null,
+  discordProviderId:
+    user?.user_metadata
+      ?.provider_id ||
+    user?.user_metadata
+      ?.sub ||
+    null,
   series,
   incidentAgainst,
   description,
