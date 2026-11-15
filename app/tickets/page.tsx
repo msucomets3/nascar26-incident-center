@@ -843,7 +843,7 @@ setMessageFiles([]);
             message.message
           }
         </div>
-        {message.attachment_urls?.map(
+{message.attachment_urls?.map(
   (
     file: any,
     index: number
@@ -854,16 +854,46 @@ setMessageFiles([]);
         marginTop: "10px",
       }}
     >
-<a
-  href={file.publicUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{
-    color: "#7dd3fc",
-  }}
->
-        📎 {file.fileName}
-      </a>
+      {(
+        file.fileName
+          ?.toLowerCase() || ""
+      ).match(
+        /\.(mp4|mov|webm|m4v)$/i
+      ) ? (
+        <video
+          controls
+          playsInline
+          style={{
+            width: "100%",
+            borderRadius:
+              "12px",
+            border:
+              "1px solid #24344f",
+          }}
+        >
+          <source
+            src={
+              file.publicUrl
+            }
+          />
+        </video>
+      ) : (
+        <img
+          src={
+            file.publicUrl
+          }
+          alt={
+            file.fileName
+          }
+          style={{
+            width: "100%",
+            borderRadius:
+              "12px",
+            border:
+              "1px solid #24344f",
+          }}
+        />
+      )}
     </div>
   )
 )}
