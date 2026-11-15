@@ -65,12 +65,20 @@ async function addNote() {
   loadTicket();
 }
 async function updateStatus() {
-  await supabase
-    .from("tickets")
-    .update({
-      status,
-    })
-    .eq("id", params.id);
+  await fetch(
+    "/api/update-ticket-status",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        ticketId: params.id,
+        status,
+      }),
+    }
+  );
 
   loadTicket();
 }
