@@ -14,6 +14,20 @@ export default function TicketLookupPage() {
   useState<any>(null);
   const [videos, setVideos] =
   useState<any[]>([]);
+  const [
+  messages,
+  setMessages,
+] = useState<any[]>([]);
+
+const [
+  newMessage,
+  setNewMessage,
+] = useState("");
+
+const [
+  displayName,
+  setDisplayName,
+] = useState("");
   const [myTickets, setMyTickets] =
   useState<any[]>([]);
   const [user, setUser] =
@@ -37,6 +51,36 @@ useEffect(() => {
       await supabase.auth.getUser();
 
     setUser(user);
+
+    if (user) {
+  const response =
+    await fetch(
+      "/api/discord-display-name",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          discordProviderId:
+            user.user_metadata
+              ?.provider_id ||
+            user.user_metadata
+              ?.sub,
+        }),
+      }
+    );
+
+  const profile =
+    await response.json();
+
+  if (profile.success) {
+    setDisplayName(
+      profile.displayName
+    );
+  }
+}
 
     loadMyTickets(user);
   }
@@ -122,15 +166,27 @@ return;
   data?.additional_information || ""
 );
 
-  if (data) {
-    const { data: videoData } =
-      await supabase
-        .from("ticket_videos")
-        .select("*")
-        .eq("ticket_id", data.id);
+if (data) {
+  const { data: videoData } =
+    await supabase
+      .from("ticket_videos")
+      .select("*")
+      .eq("ticket_id", data.id);
 
-    setVideos(videoData || []);
-  }
+  setVideos(videoData || []);
+
+  const messageResponse =
+    await fetch(
+      `/api/ticket-message?ticketId=${data.id}`
+    );
+
+  const messageData =
+    await messageResponse.json();
+
+  setMessages(
+    messageData.messages || []
+  );
+}
 }
 
 async function saveAdditionalInfo() {
@@ -204,6 +260,51 @@ alert(
 loadMyTickets(user);
 }
 
+async function sendMessage() {
+  if (
+    !newMessage.trim() ||
+    !ticket
+  ) {
+    return;
+  }
+
+  await fetch(
+    "/api/ticket-message",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        ticketId: ticket.id,
+        authorName:
+  displayName ||
+  ticket.display_name ||
+  discordName,
+        authorType:
+          "driver",
+        message:
+          newMessage,
+      }),
+    }
+  );
+
+  const response =
+    await fetch(
+      `/api/ticket-message?ticketId=${ticket.id}`
+    );
+
+  const data =
+    await response.json();
+
+  setMessages(
+    data.messages || []
+  );
+
+  setNewMessage("");
+}
+
   return (
     <main
   style={{
@@ -269,12 +370,13 @@ loadMyTickets(user);
           fontWeight: "bold",
         }}
       >
-        {user.user_metadata
-          ?.full_name ||
-         user.user_metadata
-          ?.global_name ||
-         user.user_metadata
-          ?.name}
+{displayName ||
+ user.user_metadata
+  ?.full_name ||
+ user.user_metadata
+  ?.global_name ||
+ user.user_metadata
+  ?.name}
       </div>
 
       <div
@@ -400,6 +502,18 @@ loadMyTickets(user);
           setVideos(
             videoData || []
           );
+          const messageResponse =
+  await fetch(
+    `/api/ticket-message?ticketId=${ticket.id}`
+  );
+
+const messageData =
+  await messageResponse.json();
+
+setMessages(
+  messageData.messages ||
+  []
+);
           setTimeout(() => {
   document
     .getElementById(
@@ -653,6 +767,114 @@ loadMyTickets(user);
     Additional edits are
     locked.
   </div>
+)}
+
+<hr />
+
+<h3>Conversation</h3>
+
+<div
+  style={{
+    marginBottom: "1rem",
+  }}
+>
+  {messages.map(
+    (message) => (
+      <div
+        key={message.id}
+        style={{
+          background:
+            message.author_type ===
+            "admin"
+              ? "#13233d"
+              : "#101b2e",
+          border:
+            "1px solid #24344f",
+          borderRadius:
+            "12px",
+          padding:
+            "12px",
+          marginBottom:
+            "10px",
+        }}
+      >
+        <div
+          style={{
+            fontWeight:
+              "bold",
+            marginBottom:
+              "6px",
+          }}
+        >
+          {
+            message.author_name
+          }
+        </div>
+
+        <div>
+          {
+            message.message
+          }
+        </div>
+      </div>
+    )
+  )}
+</div>
+
+{ticket.status !==
+  "Decision Pending" && (
+  <>
+    <textarea
+      value={newMessage}
+      onChange={(e) =>
+        setNewMessage(
+          e.target.value
+        )
+      }
+      onKeyDown={(e) => {
+        if (
+          e.key ===
+            "Enter" &&
+          !e.shiftKey
+        ) {
+          e.preventDefault();
+
+          sendMessage();
+        }
+      }}
+      placeholder="Type a message..."
+      style={{
+        width: "100%",
+        minHeight:
+          "100px",
+        padding:
+          "12px",
+      }}
+    />
+
+    <br />
+    <br />
+
+    <button
+      onClick={
+        sendMessage
+      }
+      style={{
+        background:
+          "#ff4d67",
+        color: "white",
+        border: "none",
+        borderRadius:
+          "12px",
+        padding:
+          "10px 16px",
+        cursor:
+          "pointer",
+      }}
+    >
+      Send Message
+    </button>
+  </>
 )}
 
 <hr />
