@@ -8,15 +8,25 @@ export default function AdminPage() {
   const [tickets, setTickets] = useState<any[]>([]);
 
   async function loadTickets() {
-    const { data } = await supabase
+  const { data, error } =
+    await supabase
       .from("tickets")
       .select("*")
       .order("created_at", {
         ascending: false,
       });
 
-    setTickets(data || []);
+  if (error) {
+    console.error(
+      "Failed to load tickets:",
+      error
+    );
+
+    return;
   }
+
+  setTickets(data || []);
+}
 
   useEffect(() => {
     loadTickets();

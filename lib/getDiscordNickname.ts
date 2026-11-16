@@ -15,26 +15,32 @@ export async function getDiscordNickname(
     return null;
   }
 
-  const response = await fetch(
-    `https://discord.com/api/v10/guilds/${guildId}/members/${discordUserId}`,
-    {
-      headers: {
-        Authorization: `Bot ${token}`,
-      },
-    }
-  );
+  try {
+    const response =
+      await fetch(
+        `https://discord.com/api/v10/guilds/${guildId}/members/${discordUserId}`,
+        {
+          headers: {
+            Authorization:
+              `Bot ${token}`,
+          },
+        }
+      );
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return null;
+    }
+
+    const member =
+      await response.json();
+
+    return (
+      member.nick ||
+      member.user?.global_name ||
+      member.user?.username ||
+      null
+    );
+  } catch {
     return null;
   }
-
-  const member =
-    await response.json();
-
-  return (
-    member.nick ||
-    member.user?.global_name ||
-    member.user?.username ||
-    null
-  );
 }

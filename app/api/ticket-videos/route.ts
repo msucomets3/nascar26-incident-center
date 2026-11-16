@@ -1,25 +1,44 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    const body = await request.json();
+    const body =
+      await request.json();
 
-    const { error } = await supabase
-      .from("ticket_videos")
-      .insert(
-        body.videos.map((video: any) => ({
-          ticket_id: body.ticketId,
-          video_url: video.publicUrl,
-          file_name: video.fileName,
-        }))
-      );
+    if (
+      !body.videos ||
+      body.videos.length === 0
+    ) {
+      return NextResponse.json({
+        success: true,
+      });
+    }
+
+    const { error } =
+      await supabase
+        .from("ticket_videos")
+        .insert(
+          body.videos.map(
+            (video: any) => ({
+              ticket_id:
+                body.ticketId,
+              video_url:
+                video.publicUrl,
+              file_name:
+                video.fileName,
+            })
+          )
+        );
 
     if (error) {
       return NextResponse.json(
         {
           success: false,
-          error: error.message,
+          error:
+            error.message,
         },
         {
           status: 500,
@@ -30,7 +49,12 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Ticket video save failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,

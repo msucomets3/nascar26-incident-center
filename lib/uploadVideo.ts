@@ -6,9 +6,10 @@ export async function uploadVideo(
   const fileName =
     `${Date.now()}-${file.name}`;
 
-  const { error } = await supabase.storage
-    .from("incident-videos")
-    .upload(fileName, file);
+  const { error } =
+    await supabase.storage
+      .from("incident-videos")
+      .upload(fileName, file);
 
   if (error) {
     throw error;

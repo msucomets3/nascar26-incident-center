@@ -27,6 +27,14 @@ export async function sendDiscordDM(
       }
     );
 
+  if (!dmChannelResponse.ok) {
+    console.error(
+      "Failed to create DM channel:",
+      await dmChannelResponse.text()
+    );
+    return;
+  }
+
   const dmChannel =
     await dmChannelResponse.json();
 
@@ -34,19 +42,27 @@ export async function sendDiscordDM(
     return;
   }
 
-  await fetch(
-    `https://discord.com/api/v10/channels/${dmChannel.id}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization:
-          `Bot ${token}`,
-        "Content-Type":
-          "application/json",
-      },
-      body: JSON.stringify({
-        content,
-      }),
-    }
-  );
+  const messageResponse =
+    await fetch(
+      `https://discord.com/api/v10/channels/${dmChannel.id}/messages`,
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            `Bot ${token}`,
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          content,
+        }),
+      }
+    );
+
+  if (!messageResponse.ok) {
+    console.error(
+      "Failed to send DM:",
+      await messageResponse.text()
+    );
+  }
 }

@@ -34,11 +34,21 @@ const [
 
 
   async function loadTicket() {
-    const { data } = await supabase
-      .from("tickets")
-      .select("*")
-      .eq("id", params.id)
-      .single();
+    const { data, error } =
+  await supabase
+    .from("tickets")
+    .select("*")
+    .eq("id", params.id)
+    .single();
+
+if (error) {
+  console.error(
+    "Failed to load ticket:",
+    error
+  );
+
+  return;
+}
 
     setTicket(data);
     const {
@@ -104,6 +114,14 @@ async function loadMessages(
       `/api/ticket-message?ticketId=${ticketId}`
     );
 
+  if (!response.ok) {
+    console.error(
+      "Failed to load messages"
+    );
+
+    return;
+  }
+
   const data =
     await response.json();
 
@@ -117,6 +135,7 @@ async function sendMessage() {
     return;
   }
 
+  const response =
   await fetch(
     "/api/ticket-message",
     {
@@ -137,6 +156,14 @@ async function sendMessage() {
     }
   );
 
+  if (!response.ok) {
+  console.error(
+    "Failed to send message"
+  );
+
+  return;
+}
+
 setNewMessage("");
 
 await loadMessages(
@@ -146,28 +173,38 @@ await loadMessages(
 }
 
 async function updateStatus() {
-  await fetch(
-    "/api/update-ticket-status",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type":
-          "application/json",
-      },
-      body: JSON.stringify({
-        ticketId: params.id,
-        status,
-      }),
-    }
-  );
+  const response =
+    await fetch(
+      "/api/update-ticket-status",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          ticketId: params.id,
+          status,
+        }),
+      }
+    );
+
+  if (!response.ok) {
+    console.error(
+      "Failed to update status"
+    );
+
+    return;
+  }
 
   loadTicket();
 }
 
 async function closeTicket() {
   setIsClosing(true);
+  const response =
   await fetch(
-  "/api/close-ticket",
+    "/api/close-ticket",
   {
     method: "POST",
     headers: {
@@ -179,6 +216,15 @@ async function closeTicket() {
     }),
   }
 );
+if (!response.ok) {
+  console.error(
+    "Failed to close ticket"
+  );
+
+  setIsClosing(false);
+
+  return;
+}
 
 window.location.href =
   "/admin";
@@ -450,6 +496,60 @@ useEffect(() => {
             message.message
           }
         </div>
+        {message.attachment_urls?.map(
+  (
+    file: any,
+    index: number
+  ) => (
+    <div
+      key={index}
+      style={{
+        marginTop: "10px",
+      }}
+    >
+      {(
+        file.fileName
+          ?.toLowerCase() || ""
+      ).match(
+        /\.(mp4|mov|webm|m4v)$/i
+      ) ? (
+        <video
+          controls
+          playsInline
+          style={{
+            width: "100%",
+            borderRadius:
+              "12px",
+            border:
+              "1px solid #24344f",
+          }}
+        >
+          <source
+            src={
+              file.publicUrl
+            }
+          />
+        </video>
+      ) : (
+        <img
+          src={
+            file.publicUrl
+          }
+          alt={
+            file.fileName
+          }
+          style={{
+            width: "100%",
+            borderRadius:
+              "12px",
+            border:
+              "1px solid #24344f",
+          }}
+        />
+      )}
+    </div>
+  )
+)}
       </div>
     )
   )}

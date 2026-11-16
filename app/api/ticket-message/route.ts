@@ -11,20 +11,20 @@ export async function POST(
     const { error } =
       await supabase
         .from("ticket_messages")
-.insert([
-  {
-    ticket_id:
-      body.ticketId,
-    author_name:
-      body.authorName,
-    author_type:
-      body.authorType,
-    message:
-      body.message,
-    attachment_urls:
-      body.attachmentUrls || [],
-  },
-]);
+        .insert([
+          {
+            ticket_id:
+              body.ticketId,
+            author_name:
+              body.authorName,
+            author_type:
+              body.authorType,
+            message:
+              body.message,
+            attachment_urls:
+              body.attachmentUrls || [],
+          },
+        ]);
 
     if (error) {
       return NextResponse.json(
@@ -42,7 +42,12 @@ export async function POST(
     return NextResponse.json({
       success: true,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Ticket message save failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,
@@ -64,6 +69,18 @@ export async function GET(
     searchParams.get(
       "ticketId"
     );
+
+  if (!ticketId) {
+    return NextResponse.json(
+      {
+        success: false,
+        messages: [],
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 
   const { data, error } =
     await supabase

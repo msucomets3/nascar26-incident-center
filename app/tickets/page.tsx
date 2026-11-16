@@ -197,12 +197,13 @@ async function loadMessages(
 }
 
 async function sendMessage() {
-  if (
-    !newMessage.trim() ||
-    !ticket
-  ) {
-    return;
-  }
+if (
+  (!newMessage.trim() &&
+    messageFiles.length === 0) ||
+  !ticket
+) {
+  return;
+}
 
   const uploadedFiles: any[] =
   [];
@@ -597,8 +598,9 @@ setMessageFiles([]);
     This incident is awaiting
     a final ruling.
 
-    Additional edits are
-    locked.
+    The conversation has been 
+    locked while Race Control
+    finalizes the ruling.
   </div>
 )}
 

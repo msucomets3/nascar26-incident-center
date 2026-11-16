@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    const body = await request.json();
+    const body =
+      await request.json();
 
     const token =
       process.env.DISCORD_BOT_TOKEN;
@@ -17,14 +20,33 @@ export async function POST(request: Request) {
     const discordUserId =
       body.discordProviderId;
 
-    const response = await fetch(
-      `https://discord.com/api/v10/guilds/${guildId}/members/${discordUserId}`,
-      {
-        headers: {
-          Authorization: `Bot ${token}`,
+    if (
+      !token ||
+      !guildId ||
+      !roleId ||
+      !discordUserId
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          isAdmin: false,
         },
-      }
-    );
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const response =
+      await fetch(
+        `https://discord.com/api/v10/guilds/${guildId}/members/${discordUserId}`,
+        {
+          headers: {
+            Authorization:
+              `Bot ${token}`,
+          },
+        }
+      );
 
     if (!response.ok) {
       return NextResponse.json({
@@ -37,13 +59,20 @@ export async function POST(request: Request) {
       await response.json();
 
     const isAdmin =
-      member.roles?.includes(roleId);
+      member.roles?.includes(
+        roleId
+      );
 
     return NextResponse.json({
       success: true,
       isAdmin,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Admin role check failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,

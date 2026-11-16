@@ -14,11 +14,15 @@ function generateTicketCode() {
   );
 }
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    const body = await request.json();
+    const body =
+      await request.json();
 
-    const ticketCode = generateTicketCode();
+    const ticketCode =
+      generateTicketCode();
 
     const displayName =
       body.discordProviderId
@@ -27,29 +31,32 @@ export async function POST(request: Request) {
           )
         : null;
 
-    const { data, error } = await supabase
-      .from("tickets")
-      .insert([
-        {
-          ticket_code: ticketCode,
-          discord_name:
-            body.discordName,
-          discord_user_id:
-            body.discordUserId,
-          discord_provider_id:
-            body.discordProviderId,
-          display_name:
-            displayName,
-          series: body.series,
-          incident_against:
-            body.incidentAgainst,
-          description:
-            body.description,
-          status: "New",
-        },
-      ])
-      .select()
-      .single();
+    const { data, error } =
+      await supabase
+        .from("tickets")
+        .insert([
+          {
+            ticket_code:
+              ticketCode,
+            discord_name:
+              body.discordName,
+            discord_user_id:
+              body.discordUserId,
+            discord_provider_id:
+              body.discordProviderId,
+            display_name:
+              displayName,
+            series:
+              body.series,
+            incident_against:
+              body.incidentAgainst,
+            description:
+              body.description,
+            status: "New",
+          },
+        ])
+        .select()
+        .single();
 
     if (error) {
       console.error(error);
@@ -57,7 +64,8 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: error.message,
+          error:
+            error.message,
         },
         {
           status: 500,
@@ -99,6 +107,11 @@ You can monitor the status of this incident through the Incident Center.`
       ticketCode,
     });
   } catch (error) {
+    console.error(
+      "Ticket creation failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,

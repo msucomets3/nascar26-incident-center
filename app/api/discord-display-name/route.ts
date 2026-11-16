@@ -1,25 +1,19 @@
 import { NextResponse } from "next/server";
+import { getDiscordNickname } from "../../../lib/getDiscordNickname";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    const body = await request.json();
+    const body =
+      await request.json();
 
-    const token =
-      process.env.DISCORD_BOT_TOKEN;
+    const displayName =
+      await getDiscordNickname(
+        body.discordProviderId
+      );
 
-    const guildId =
-      process.env.DISCORD_GUILD_ID;
-
-    const response = await fetch(
-      `https://discord.com/api/v10/guilds/${guildId}/members/${body.discordProviderId}`,
-      {
-        headers: {
-          Authorization: `Bot ${token}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
+    if (!displayName) {
       return NextResponse.json(
         {
           success: false,
@@ -30,18 +24,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const member =
-      await response.json();
-
     return NextResponse.json({
       success: true,
-      displayName:
-        member.nick ||
-        member.user?.global_name ||
-        member.user?.username ||
-        null,
+      displayName,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Discord display name lookup failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,

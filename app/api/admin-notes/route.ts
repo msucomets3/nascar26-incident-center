@@ -1,33 +1,47 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
-    const body = await request.json();
+    const body =
+      await request.json();
 
-    const { error } = await supabase
-      .from("admin_notes")
-      .insert([
-        {
-          ticket_id: body.ticketId,
-          note: body.note,
-        },
-      ]);
+    const { error } =
+      await supabase
+        .from("admin_notes")
+        .insert([
+          {
+            ticket_id:
+              body.ticketId,
+            note:
+              body.note,
+          },
+        ]);
 
     if (error) {
       return NextResponse.json(
         {
           success: false,
-          error: error.message,
+          error:
+            error.message,
         },
-        { status: 500 }
+        {
+          status: 500,
+        }
       );
     }
 
     return NextResponse.json({
       success: true,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Admin note save failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,

@@ -13,18 +13,27 @@ export async function sendDiscordMessage(
     return;
   }
 
-  await fetch(
-    `https://discord.com/api/v10/channels/${targetChannel}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bot ${token}`,
-        "Content-Type":
-          "application/json",
-      },
-      body: JSON.stringify({
-        content,
-      }),
-    }
-  );
+  const response =
+    await fetch(
+      `https://discord.com/api/v10/channels/${targetChannel}/messages`,
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            `Bot ${token}`,
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          content,
+        }),
+      }
+    );
+
+  if (!response.ok) {
+    console.error(
+      "Failed to send Discord message:",
+      await response.text()
+    );
+  }
 }

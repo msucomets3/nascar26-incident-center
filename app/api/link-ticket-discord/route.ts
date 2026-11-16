@@ -42,17 +42,29 @@ export async function POST(
       );
     }
 
-    await sendDiscordDM(
-      body.discordProviderId,
-      `✅ Discord account linked successfully.
+    try {
+      await sendDiscordDM(
+        body.discordProviderId,
+        `✅ Discord account linked successfully.
 
 Future steward messages and ticket updates will be sent through Discord.`
-    );
+      );
+    } catch (error) {
+      console.error(
+        "Discord link DM failed:",
+        error
+      );
+    }
 
     return NextResponse.json({
       success: true,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "Discord ticket linking failed:",
+      error
+    );
+
     return NextResponse.json(
       {
         success: false,
