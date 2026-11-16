@@ -64,6 +64,11 @@ Please visit #league-announcements to review the outcome.`
       .eq("ticket_id", body.ticketId);
 
     await supabase
+      .from("ticket_messages")
+      .delete()
+      .eq("ticket_id", body.ticketId);
+
+    await supabase
       .from("tickets")
       .delete()
       .eq("id", body.ticketId);
