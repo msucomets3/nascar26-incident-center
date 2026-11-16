@@ -21,6 +21,15 @@ export default function HomePage() {
   displayName,
   setDisplayName,
 ] = useState("");
+const [
+  showDiscordLinkPrompt,
+  setShowDiscordLinkPrompt,
+] = useState(false);
+
+const [
+  createdTicketCode,
+  setCreatedTicketCode,
+] = useState("");
 
   const [
   isSubmitting,
@@ -48,6 +57,46 @@ useEffect(() => {
     } = await supabase.auth.getUser();
 
     setUser(data.user);
+
+    const latestTicketId =
+  localStorage.getItem(
+    "latestTicketId"
+  );
+
+if (
+  data.user &&
+  latestTicketId
+) {
+  await fetch(
+    "/api/link-ticket-discord",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        ticketId:
+          latestTicketId,
+        discordUserId:
+          data.user.id,
+        discordProviderId:
+          data.user.user_metadata
+            ?.provider_id ||
+          data.user.user_metadata
+            ?.sub,
+      }),
+    }
+  );
+
+  localStorage.removeItem(
+    "latestTicketId"
+  );
+
+  alert(
+    "✅ Discord account linked successfully. Future steward messages and ticket updates will be sent through Discord."
+  );
+}
 
     if (data.user) {
       const response =
@@ -153,6 +202,12 @@ body: JSON.stringify({
     });
 
     const data = await response.json();
+
+    localStorage.setItem(
+  "latestTicketId",
+  data.ticketId
+);
+
     localStorage.setItem(
   "discordName",
   discordName
@@ -171,9 +226,20 @@ await fetch("/api/ticket-videos", {
 
 setIsSubmitting(false);
 setShowLongWaitMessage(false);
-alert(
-  `Ticket Created: ${data.ticketCode}`
-);
+
+if (!user) {
+  setCreatedTicketCode(
+    data.ticketCode
+  );
+
+  setShowDiscordLinkPrompt(
+    true
+  );
+} else {
+  alert(
+    `Ticket Created: ${data.ticketCode}`
+  );
+}
   } catch (error) {
     setIsSubmitting(false);
     setShowLongWaitMessage(false);
@@ -584,6 +650,107 @@ alert(
           </div>
         </div>
       )}
+{showDiscordLinkPrompt && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background:
+        "rgba(0,0,0,0.8)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent:
+        "center",
+      zIndex: 10000,
+    }}
+  >
+    <div
+      style={{
+        background: "#101b2e",
+        border:
+          "1px solid #24344f",
+        borderRadius:
+          "16px",
+        padding: "2rem",
+        maxWidth: "500px",
+        textAlign: "center",
+      }}
+    >
+      <h2>
+        ✅ Ticket Created
+      </h2>
+
+      <p>
+        Ticket:
+        {" "}
+        {createdTicketCode}
+      </p>
+
+      <p>
+        Link your Discord account
+        to receive steward
+        messages, ticket updates,
+        and direct messages.
+      </p>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+          justifyContent:
+            "center",
+          marginTop: "1rem",
+        }}
+      >
+        <button
+          onClick={
+            signInWithDiscord
+          }
+          style={{
+            background:
+              "#5865F2",
+            color: "white",
+            border: "none",
+            borderRadius:
+              "12px",
+            padding:
+              "10px 16px",
+            cursor:
+              "pointer",
+          }}
+        >
+          Link Discord Account
+        </button>
+
+        <button
+          onClick={() =>
+            setShowDiscordLinkPrompt(
+              false
+            )
+          }
+          style={{
+            background:
+              "#13233d",
+            color: "white",
+            border:
+              "1px solid #24344f",
+            borderRadius:
+              "12px",
+            padding:
+              "10px 16px",
+            cursor:
+              "pointer",
+          }}
+        >
+          Continue Without Discord
+        </button>
+      </div>
+    </div>
+  </div>
+)}      
     </main>
   );
 }
