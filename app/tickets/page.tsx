@@ -12,8 +12,6 @@ export default function TicketLookupPage() {
   const [ticketCode, setTicketCode] = useState("");
   const [ticket, setTicket] =
   useState<any>(null);
-  const [videos, setVideos] =
-  useState<any[]>([]);
   const [
   messages,
   setMessages,
@@ -36,16 +34,6 @@ const [
   useState<any[]>([]);
   const [user, setUser] =
   useState<any>(null);
-  const [
-  additionalInformation,
-  setAdditionalInformation,
-] = useState("");
-
-const [
-  additionalVideos,
-  setAdditionalVideos,
-] = useState<File[]>([]);
-
 
 useEffect(() => {
   async function initialize() {
@@ -183,95 +171,13 @@ return;
     .eq("discord_name", discordName)
     .single();
 
-  setTicket(data);
-  setAdditionalInformation(
-  data?.additional_information || ""
-);
+ setTicket(data);
 
 if (data) {
-  const { data: videoData } =
-    await supabase
-      .from("ticket_videos")
-      .select("*")
-      .eq("ticket_id", data.id);
-
-  setVideos(videoData || []);
-
   await loadMessages(
-  data.id
-);
-}
-}
-
-async function saveAdditionalInfo() {
-  if (!ticket) {
-    return;
-  }
-
-  await supabase
-    .from("tickets")
-    .update({
-      additional_information:
-        additionalInformation,
-    })
-    .eq("id", ticket.id);
-
-  if (
-    additionalVideos.length > 0
-  ) {
-    const uploadedVideos: any[] =
-      [];
-
-    for (const file of additionalVideos) {
-      const uploadResult =
-        await uploadVideo(file);
-
-      uploadedVideos.push(
-        uploadResult
-      );
-    }
-
-    await fetch(
-      "/api/ticket-videos",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
-        body: JSON.stringify({
-          ticketId: ticket.id,
-          videos: uploadedVideos,
-        }),
-      }
-    );
-    const {
-  data: refreshedVideos,
-} = await supabase
-  .from("ticket_videos")
-  .select("*")
-  .eq(
-    "ticket_id",
-    ticket.id
+    data.id
   );
-
-setVideos(
-  refreshedVideos || []
-);
-  }
-
-  setTicket({
-  ...ticket,
-  additional_information:
-    additionalInformation,
-});
-
-setAdditionalVideos([]);
-alert(
-  "Additional information saved"
-);
-
-loadMyTickets(user);
+}
 }
 
 async function loadMessages(
@@ -508,9 +414,6 @@ setMessageFiles([]);
           e.preventDefault();
 
           setTicket(ticket);
-          setAdditionalInformation(
-  ticket.additional_information || ""
-);
 
           setTicketCode(
             ticket.ticket_code
@@ -523,21 +426,6 @@ setMessageFiles([]);
   )
 );
 
-          const {
-            data: videoData,
-          } = await supabase
-            .from(
-              "ticket_videos"
-            )
-            .select("*")
-            .eq(
-              "ticket_id",
-              ticket.id
-            );
-
-          setVideos(
-            videoData || []
-          );
           await loadMessages(
   ticket.id
 );
@@ -683,16 +571,7 @@ setMessageFiles([]);
       <strong>Description:</strong>{" "}
       {ticket.description}
     </p>
-    <p>
-  <strong>
-    Additional Information:
-  </strong>
-</p>
-
-<p>
-  {ticket.additional_information ||
-    "None"}
-</p>
+  
     <p>
   <strong>Status:</strong>{" "}
   {ticket.status === "New" &&
@@ -706,79 +585,6 @@ setMessageFiles([]);
     "Decision Pending" &&
     "🔵 Decision Pending"}
 </p>
-
-{ticket.status !==
-  "Decision Pending" && (
-  <div
-    style={{
-      marginTop: "2rem",
-    }}
-  >
-    <h3>
-      Additional Information
-    </h3>
-
-    <textarea
-      value={
-        additionalInformation
-      }
-      onChange={(e) =>
-        setAdditionalInformation(
-          e.target.value
-        )
-      }
-      style={{
-        width: "100%",
-        minHeight: "120px",
-        padding: "12px",
-      }}
-    />
-
-    <br />
-    <br />
-
-    <label>
-      Additional Evidence
-    </label>
-
-    <br />
-
-    <input
-      type="file"
-      multiple
-      accept="video/*"
-      onChange={(e) =>
-        setAdditionalVideos(
-          Array.from(
-            e.target.files || []
-          )
-        )
-      }
-    />
-
-    <br />
-    <br />
-
-    <button
-      onClick={
-        saveAdditionalInfo
-      }
-      style={{
-        background:
-          "#ff4d67",
-        color: "white",
-        border: "none",
-        borderRadius:
-          "12px",
-        padding:
-          "10px 16px",
-        cursor: "pointer",
-      }}
-    >
-      Save Additional Information
-    </button>
-  </div>
-)}
 
 {ticket.status ===
   "Decision Pending" && (
@@ -974,33 +780,6 @@ setMessageFiles([]);
   </>
 )}
 
-<hr />
-
-<h3>Uploaded Videos</h3>
-
-{videos.map((video) => (
-  <div
-    key={video.id}
-    style={{
-      marginBottom: "1.5rem",
-    }}
-  >
-    <video
-      controls
-      playsInline
-      preload="metadata"
-      style={{
-        width: "100%",
-        borderRadius: "12px",
-        border: "1px solid #24344f",
-      }}
-    >
-      <source
-        src={video.video_url}
-      />
-    </video>
-  </div>
-))}
   </div>
 )}
     </main>
