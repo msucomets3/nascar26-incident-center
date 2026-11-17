@@ -41,7 +41,6 @@ export default function AdminPage() {
           padding: "2rem",
           background: "#08111f",
           color: "white",
-          minHeight: "100vh",
           fontFamily: "Arial, sans-serif",
         }}
       >

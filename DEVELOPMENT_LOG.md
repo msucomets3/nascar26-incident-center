@@ -55,3 +55,9 @@ Added error handling for:
 - Moved away from layout spacing created with <br /> tags in favor of intentional spacing.
 - Fixed conversation message composer overflow by using border-box sizing.
 - Restricted incident evidence video display size for improved desktop and mobile usability.
+
+### Global Styling
+
+- Applied application-wide dark background styling through app/layout.tsx.
+- Eliminated white space appearing below shorter pages.
+- Preserved mobile behavior without reintroducing unnecessary scrolling.
