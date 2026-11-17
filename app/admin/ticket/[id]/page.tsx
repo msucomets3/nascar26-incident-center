@@ -642,19 +642,17 @@ useEffect(() => {
   }}
   placeholder="Type a message..."
   style={{
-    width: "100%",
-    minHeight:
-      "100px",
-    background:
-      "#08111f",
-    color: "white",
-    border:
-      "1px solid #24344f",
-    borderRadius:
-      "12px",
-    padding:
-      "12px",
-  }}
+  width: "100%",
+  minHeight: "100px",
+  background: "#08111f",
+  color: "white",
+  border: "1px solid #24344f",
+  borderRadius: "12px",
+  padding: "12px",
+  boxSizing: "border-box",
+  resize: "vertical",
+}}
+
 />
 
 <button
