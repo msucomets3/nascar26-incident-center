@@ -396,7 +396,16 @@ useEffect(() => {
   }}
 >
   TICKET STATUS
-</h2>      
+</h2>
+<div
+  style={{
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "1rem",
+    marginBottom: "2rem",
+  }}
+>   
       
       <p>
   <strong>Status:</strong>
@@ -443,6 +452,7 @@ useEffect(() => {
 >
   Update Status
 </button>
+</div>
 
       <hr />
 
@@ -455,6 +465,16 @@ useEffect(() => {
 >
   INCIDENT EVIDENCE
 </h2>
+
+<div
+  style={{
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "1rem",
+    marginBottom: "2rem",
+  }}
+>
 
 {videos.map((video) => (
   <div
@@ -479,6 +499,7 @@ useEffect(() => {
     </video>
   </div>
 ))}
+</div>
       <hr />
 
 <h2
@@ -593,6 +614,14 @@ useEffect(() => {
   )}
 </div>
 
+<div
+  style={{
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "1rem",
+  }}
+>
 <textarea
   value={newMessage}
   onChange={(e) =>
@@ -650,6 +679,7 @@ useEffect(() => {
   Send Message
 </button>
 
+</div>
 <button
   onClick={closeTicket}
   disabled={isClosing}
