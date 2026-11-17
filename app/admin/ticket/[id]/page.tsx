@@ -488,10 +488,13 @@ useEffect(() => {
       playsInline
       preload="metadata"
       style={{
-        width: "100%",
-        borderRadius: "12px",
-        border: "1px solid #24344f",
-      }}
+  width: "100%",
+  maxWidth: "500px",
+  borderRadius: "12px",
+  border: "1px solid #24344f",
+  display: "block",
+  margin: "0 auto",
+}}
     >
       <source
         src={video.video_url}
