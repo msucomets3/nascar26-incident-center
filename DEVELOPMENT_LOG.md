@@ -36,3 +36,7 @@ Added error handling for:
 - sendMessage()
 - updateStatus()
 - closeTicket()
+
+### Discord Notifications
+- Removed excessive spacing in steward notifications.
+- Added direct ticket review link to Discord incident notifications.

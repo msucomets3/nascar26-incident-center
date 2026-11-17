@@ -74,19 +74,17 @@ export async function POST(
     }
 
     await sendDiscordMessage(
-      `🚨 New Incident Submitted
-
+  `🚨 New Incident Submitted
 Ticket: ${ticketCode}
-
 Reporter: ${
-        displayName ||
-        body.discordName
-      }
-
-Series: ${body.series}`,
-      process.env
-        .DISCORD_PENALTY_CHANNEL_ID
-    );
+    displayName ||
+    body.discordName
+  }
+Series: ${body.series}
+Review: https://nascar26-incident-center.vercel.app/admin/ticket/${data.id}`,
+  process.env
+    .DISCORD_PENALTY_CHANNEL_ID
+);
 
     await sendDiscordDM(
       body.discordProviderId,

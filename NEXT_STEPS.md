@@ -39,3 +39,16 @@
 - Discord account linking
 - Discord nickname support
 - Error handling improvements
+
+## Future Investigation
+
+- Learn Supabase Row Level Security (RLS)
+- Evaluate whether ticket tables should use RLS
+- Do not change current RLS settings until fully understood
+
+## Investigate Later
+
+- Occasionally received repeated "Discord account linked successfully" messages and DMs while testing login/admin navigation.
+- Issue could not be reliably reproduced.
+- LatestTicketId was not present in Local Storage when checked.
+- Monitor for recurrence before making code changes.
