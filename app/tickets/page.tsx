@@ -403,9 +403,9 @@ setMessageFiles([]);
 </h2>
 
     {myTickets.map(
-  (ticket) => (
+  (myTicket) => (
     <div
-      key={ticket.id}
+      key={myTicket.id}
       style={{
         marginBottom: "1rem",
       }}
@@ -413,35 +413,43 @@ setMessageFiles([]);
       <a
         href="#"
         onClick={async (e) => {
-          e.preventDefault();
+  e.preventDefault();
 
-          setTicket(ticket);
+  if (
+  ticket?.id ===
+  myTicket.id
+) {
+  setTicket(null);
+  return;
+}
 
-          setTicketCode(
-            ticket.ticket_code
-          );
+setTicket(myTicket);
 
-          setDiscordName(
-  ticket.discord_name?.replace(
+setTicketCode(
+  myTicket.ticket_code
+);
+
+setDiscordName(
+  myTicket.discord_name?.replace(
     "#0",
     ""
   )
 );
 
-          await loadMessages(
-  ticket.id
+await loadMessages(
+  myTicket.id
 );
-          setTimeout(() => {
-  document
-    .getElementById(
-      "ticket-details"
-    )
-    ?.scrollIntoView({
-      behavior: "smooth",
-    });
-}, 100);
 
-        }}
+  setTimeout(() => {
+    document
+      .getElementById(
+        "ticket-details"
+      )
+      ?.scrollIntoView({
+        behavior: "smooth",
+      });
+  }, 100);
+}}
         style={{
           color: "#ff4d67",
           fontWeight: "bold",
@@ -450,20 +458,20 @@ setMessageFiles([]);
           cursor: "pointer",
         }}
       >
-        {ticket.ticket_code}
+        {myTicket.ticket_code}
       </a>
 
       <br />
 
-      {ticket.status ===
+      {myTicket.status ===
         "New" &&
         "🟢 New"}
 
-      {ticket.status ===
+      {myTicket.status ===
         "Under Review" &&
         "🟡 Under Review"}
 
-      {ticket.status ===
+      {myTicket.status ===
         "Decision Pending" &&
         "🔵 Decision Pending"}
     </div>
