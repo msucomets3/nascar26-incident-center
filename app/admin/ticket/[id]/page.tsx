@@ -357,6 +357,16 @@ useEffect(() => {
   TICKET DETAILS
 </h2>      
 
+<div
+  style={{
+    background: "#101b2e",
+    border: "1px solid #24344f",
+    borderRadius: "16px",
+    padding: "1rem",
+    marginBottom: "2rem",
+  }}
+>
+
       <p>
   <strong>Reporter:</strong>{" "}
   {ticket.display_name ||
@@ -368,10 +378,15 @@ useEffect(() => {
         {ticket.incident_against}
       </p>
 
-      <p>
-        <strong>Description:</strong>{" "}
-        {ticket.description}
-      </p>
+      <p
+  style={{
+    marginBottom: "0",
+  }}
+>
+  <strong>Description:</strong>{" "}
+  {ticket.description}
+</p>
+</div>
       
 <h2
   style={{
