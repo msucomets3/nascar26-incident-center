@@ -19,7 +19,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
-    </html>
+  <body
+    style={{
+      background: "#08111f",
+      margin: 0,
+    }}
+  >
+    {children}
+  </body>
+</html>
   );
 }
