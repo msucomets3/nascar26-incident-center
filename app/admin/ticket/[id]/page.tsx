@@ -414,8 +414,6 @@ useEffect(() => {
   </option>
 </select>
 
-<br />
-
 <button
   onClick={updateStatus}
   style={{
@@ -425,7 +423,7 @@ useEffect(() => {
     borderRadius: "12px",
     padding: "10px 16px",
     cursor: "pointer",
-    marginBottom: "0",
+    marginBottom: "1rem",
   }}
 >
   Update Status
@@ -615,9 +613,6 @@ useEffect(() => {
   }}
 />
 
-<br />
-<br />
-
 <button
   onClick={sendMessage}
   style={{
@@ -633,12 +628,12 @@ useEffect(() => {
       "pointer",
     fontWeight:
       "bold",
+    marginBottom:
+      "1rem",  
   }}
 >
   Send Message
 </button>
-<br />
-<br />
 
 <button
   onClick={closeTicket}

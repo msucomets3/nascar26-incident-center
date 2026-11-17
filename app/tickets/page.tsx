@@ -369,12 +369,13 @@ setMessageFiles([]);
       }}
     >
       <h2
-        style={{
-          color: "#ff4d67",
-        }}
-      >
-        My Tickets
-      </h2>
+  style={{
+    color: "#ff4d67",
+    marginBottom: "1rem",
+  }}
+>
+  My Tickets
+</h2>
 
       <p>
         No incidents have
@@ -394,12 +395,13 @@ setMessageFiles([]);
     }}
   >
     <h2
-      style={{
-        color: "#ff4d67",
-      }}
-    >
-      My Tickets
-    </h2>
+  style={{
+    color: "#ff4d67",
+    marginBottom: "1rem",
+  }}
+>
+  My Tickets
+</h2>
 
     {myTickets.map(
   (ticket) => (
@@ -540,9 +542,10 @@ setMessageFiles([]);
 >
     <h2
   style={{
-    color: "#ff4d67",
-    fontSize: "2rem",
-  }}
+  color: "#ff4d67",
+  fontSize: "clamp(1.5rem, 4vw, 2rem)",
+  marginBottom: "1rem"
+}}
 >
   {ticket.ticket_code}
 </h2>
@@ -606,7 +609,15 @@ setMessageFiles([]);
 
 <hr />
 
-<h3>Conversation</h3>
+<h2
+  style={{
+    color: "#ff4d67",
+    marginTop: "2rem",
+    marginBottom: "1rem",
+  }}
+>
+  CONVERSATION
+</h2>
 
 <div
   style={{
