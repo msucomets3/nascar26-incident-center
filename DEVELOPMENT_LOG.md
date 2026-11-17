@@ -40,3 +40,18 @@ Added error handling for:
 ### Discord Notifications
 - Removed excessive spacing in steward notifications.
 - Added direct ticket review link to Discord incident notifications.
+
+### UI Consistency Pass
+
+- Standardized page title sizing across Home, Tickets, Admin Dashboard, and Admin Ticket pages.
+- Standardized subtitle spacing across major pages.
+- Reorganized Admin Ticket page into clearly defined sections:
+  - TICKET DETAILS
+  - TICKET STATUS
+  - INCIDENT EVIDENCE
+  - CONVERSATION
+- Converted Admin Ticket sections to use homepage-style card layouts.
+- Improved mobile spacing and reduced unnecessary vertical whitespace.
+- Moved away from layout spacing created with <br /> tags in favor of intentional spacing.
+- Fixed conversation message composer overflow by using border-box sizing.
+- Restricted incident evidence video display size for improved desktop and mobile usability.

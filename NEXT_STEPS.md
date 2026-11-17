@@ -52,3 +52,14 @@
 - Issue could not be reliably reproduced.
 - LatestTicketId was not present in Local Storage when checked.
 - Monitor for recurrence before making code changes.
+
+## UI Improvements
+
+- Continue consistency pass on app/tickets/page.tsx.
+- Continue consistency pass on app/admin/page.tsx.
+- Standardize card-based layouts across all major pages.
+- Continue reducing unnecessary vertical scrolling on mobile devices.
+
+- Investigate custom dropdown indicator for Ticket Status on iPhone/iOS browsers.
+- Dropdown functions correctly, but iPhone browsers do not display a visible dropdown arrow.
+- Could cause new stewards to think "Update Status" changes the status instead of the dropdown.
