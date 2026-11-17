@@ -253,10 +253,9 @@ setMessageFiles([]);
   style={{
     maxWidth: "1000px",
     margin: "0 auto",
-    padding: "2rem",
+    padding: "1rem",
     background: "#08111f",
     color: "white",
-    minHeight: "100vh",
     fontFamily: "Arial, sans-serif",
   }}
 >
