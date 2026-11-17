@@ -58,7 +58,7 @@ export default function AdminPage() {
           <h1
             style={{
               color: "#ff4d67",
-              fontSize: "3rem",
+              fontSize: "clamp(1.75rem, 5vw, 3rem)",
               margin: 0,
             }}
           >
@@ -110,7 +110,7 @@ export default function AdminPage() {
         <p
           style={{
             color: "#c0c8d4",
-            marginBottom: "2rem",
+            marginBottom: "1rem",
           }}
         >
           AJRabbitGaming Steward Dashboard

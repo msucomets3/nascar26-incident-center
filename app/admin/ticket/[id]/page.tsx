@@ -273,7 +273,7 @@ useEffect(() => {
       <h1
   style={{
     color: "#ff4d67",
-    fontSize: "3rem",
+    fontSize: "clamp(1.75rem, 5vw, 3rem)",
     marginBottom: "0.5rem",
   }}
 >
@@ -300,7 +300,7 @@ useEffect(() => {
 <p
   style={{
     color: "#c0c8d4",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   }}
 >
   AJRabbitGaming Incident Review
@@ -309,7 +309,7 @@ useEffect(() => {
   style={{
     display: "flex",
     gap: "10px",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   }}
 >
   <button
@@ -347,6 +347,16 @@ useEffect(() => {
   </button>
 </div>
 
+<h2
+  style={{
+    color: "#ff4d67",
+    marginTop: "2rem",
+    marginBottom: "1rem",
+  }}
+>
+  TICKET DETAILS
+</h2>      
+
       <p>
   <strong>Reporter:</strong>{" "}
   {ticket.display_name ||
@@ -362,6 +372,17 @@ useEffect(() => {
         <strong>Description:</strong>{" "}
         {ticket.description}
       </p>
+      
+<h2
+  style={{
+    color: "#ff4d67",
+    marginTop: "2rem",
+    marginBottom: "1rem",
+  }}
+>
+  TICKET STATUS
+</h2>      
+      
       <p>
   <strong>Status:</strong>
 </p>
@@ -373,7 +394,7 @@ useEffect(() => {
   }
   style={{
   padding: "10px",
-  marginBottom: "1rem",
+  marginBottom: "0.5rem",
   background: "#101b2e",
   color: "white",
   border: "1px solid #24344f",
@@ -404,7 +425,7 @@ useEffect(() => {
     borderRadius: "12px",
     padding: "10px 16px",
     cursor: "pointer",
-    marginBottom: "1rem",
+    marginBottom: "0",
   }}
 >
   Update Status
@@ -415,6 +436,8 @@ useEffect(() => {
       <h2
   style={{
     color: "#ff4d67",
+    marginTop: "2rem",
+    marginBottom: "1rem",
   }}
 >
   INCIDENT EVIDENCE
@@ -448,6 +471,8 @@ useEffect(() => {
 <h2
   style={{
     color: "#ff4d67",
+    marginTop: "2rem",
+    marginBottom: "1rem",
   }}
 >
   CONVERSATION

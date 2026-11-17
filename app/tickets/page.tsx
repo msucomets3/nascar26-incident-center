@@ -263,7 +263,7 @@ setMessageFiles([]);
       <h1
   style={{
     color: "#ff4d67",
-    fontSize: "3rem",
+    fontSize: "clamp(1.75rem, 5vw, 3rem)",
     marginBottom: "0.5rem",
   }}
 >
@@ -274,7 +274,7 @@ setMessageFiles([]);
 <p
   style={{
     color: "#c0c8d4",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   }}
 >
   AJRabbitGaming Race Control
@@ -335,7 +335,7 @@ setMessageFiles([]);
 )}
 <div
   style={{
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   }}
 >
   <button
