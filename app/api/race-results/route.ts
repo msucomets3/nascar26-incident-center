@@ -91,29 +91,42 @@ for (const file of files) {
   message
 );
 
+let roleId = "";
 let channelId = "";
 
 if (testMode) {
   channelId =
     "1572462976311627877";
+
+  roleId =
+    "1488331424791793736";
 } else if (
   series ===
   "Redline Cup Series"
 ) {
   channelId =
     "1544427262370127893";
+
+  roleId =
+    "1488331337428373614";
 } else if (
   series ===
   "Grand National Series"
 ) {
   channelId =
     "1544428008750972958";
+
+  roleId =
+    "1488331424791793736";
 } else if (
   series ===
   "Rapid Response Truck Series"
 ) {
   channelId =
     "1540359548140003398";
+
+  roleId =
+    "1493809179012366419";
 } else {
   return NextResponse.json(
     {
@@ -134,7 +147,9 @@ const validFiles =
   );
 
 await sendDiscordResults(
-  `🏁 Race Results Test
+  `<@&${roleId}>
+
+🏁 Race Results Test
 
 Series: ${series}
 
