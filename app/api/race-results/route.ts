@@ -98,8 +98,25 @@ if (testMode) {
   channelId =
     "1572462976311627877";
 
-  roleId =
-    "1488331424791793736";
+  if (
+    series ===
+    "Redline Cup Series"
+  ) {
+    roleId =
+      "1488331337428373614";
+  } else if (
+    series ===
+    "Grand National Series"
+  ) {
+    roleId =
+      "1488331424791793736";
+  } else if (
+    series ===
+    "Rapid Response Truck Series"
+  ) {
+    roleId =
+      "1493809179012366419";
+  }
 } else if (
   series ===
   "Redline Cup Series"
