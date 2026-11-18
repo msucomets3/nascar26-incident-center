@@ -1,3 +1,4 @@
+import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -64,11 +65,22 @@ export async function POST(
   );
 
   console.log(
-    "MESSAGE:",
-    message
-  );
+  "MESSAGE:",
+  message
+);
 
-  return NextResponse.json({
-    ok: true,
-  });
+await sendDiscordMessage(
+  `🏁 Race Results Test
+
+Series: ${series}
+
+Winner: ${winnerName}
+
+${message}`,
+  "1572462976311627877"
+);
+
+return NextResponse.json({
+  ok: true,
+});
 }
