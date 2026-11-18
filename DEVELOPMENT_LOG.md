@@ -128,3 +128,18 @@ Added error handling for:
 - Encountered Discord "Missing Access" error during first production test.
 - Root cause: Race Control was not a member of the production standings channel.
 - Added Race Control to standings channels and resumed testing.
+
+### Race Results Automation
+
+- Built authenticated /api/race-results endpoint.
+- Added Claude Points App integration.
+- Added image attachment support.
+- Added automatic series routing.
+- Added automatic series role mentions.
+- Added permanent test mode using ?test=1.
+- Successfully deployed and tested production posting.
+- Race Control can now automatically publish:
+  - race results
+  - standings
+  - owner standings
+  to Discord from the Points App.
