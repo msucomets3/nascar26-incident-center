@@ -67,3 +67,13 @@ Added error handling for:
 - Renamed Discord bot from "Penalty Bot" to "Race Control".
 - Bot responsibilities expanded beyond incident management.
 - Race Control now serves as the league's central automation bot.
+
+### Race Control Automation
+
+- Created authenticated /api/race-results endpoint.
+- Implemented shared-secret authorization for external result publishing.
+- Successfully tested end-to-end communication between:
+  - Claude Points App
+  - Incident Center
+  - Race Control Discord Bot
+- Successfully posted test messages into #bot-testing.

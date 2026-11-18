@@ -69,6 +69,42 @@ export async function POST(
   message
 );
 
+let channelId = "";
+
+if (testMode) {
+  channelId =
+    "1572462976311627877";
+} else if (
+  series ===
+  "Redline Cup Series"
+) {
+  channelId =
+    "1544427262370127893";
+} else if (
+  series ===
+  "Grand National Series"
+) {
+  channelId =
+    "1544428008750972958";
+} else if (
+  series ===
+  "Rapid Response Truck Series"
+) {
+  channelId =
+    "1540359548140003398";
+} else {
+  return NextResponse.json(
+    {
+      ok: false,
+      reason:
+        "unknown series",
+    },
+    {
+      status: 400,
+    }
+  );
+}
+
 await sendDiscordMessage(
   `🏁 Race Results Test
 
@@ -77,7 +113,7 @@ Series: ${series}
 Winner: ${winnerName}
 
 ${message}`,
-  "1572462976311627877"
+  channelId
 );
 
 return NextResponse.json({
