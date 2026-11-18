@@ -61,3 +61,9 @@ Added error handling for:
 - Applied application-wide dark background styling through app/layout.tsx.
 - Eliminated white space appearing below shorter pages.
 - Preserved mobile behavior without reintroducing unnecessary scrolling.
+
+### Discord Bot
+
+- Renamed Discord bot from "Penalty Bot" to "Race Control".
+- Bot responsibilities expanded beyond incident management.
+- Race Control now serves as the league's central automation bot.

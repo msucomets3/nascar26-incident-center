@@ -63,3 +63,19 @@
 - Investigate custom dropdown indicator for Ticket Status on iPhone/iOS browsers.
 - Dropdown functions correctly, but iPhone browsers do not display a visible dropdown arrow.
 - Could cause new stewards to think "Update Status" changes the status instead of the dropdown.
+
+## Future Features
+
+- Add League Announcements section to Incident Center admin portal.
+- Allow one-click Discord announcements for:
+  - Race Results Published
+  - Updated Standings
+  - Updated Playoffs
+  - Penalty Reports
+  - Race Preview Available
+
+Long-Term:
+- Evaluate migrating the NASCAR26 Points App into the Incident Center platform.
+- Reuse existing Discord bot infrastructure.
+- Reuse existing admin authentication.
+- Reuse existing Vercel deployment.
