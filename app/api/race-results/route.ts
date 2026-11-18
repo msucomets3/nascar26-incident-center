@@ -60,6 +60,24 @@ console.log(
   type
 );
 
+if (
+  type !==
+    "race-results" &&
+  type !==
+    "race-preview"
+) {
+  return NextResponse.json(
+    {
+      ok: false,
+      reason:
+        "unknown type",
+    },
+    {
+      status: 400,
+    }
+  );
+}
+
   const files =
   formData.getAll(
     "files"
