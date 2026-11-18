@@ -1,4 +1,5 @@
 import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
+import { sendDiscordResults } from "../../../lib/sendDiscordResults";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -126,7 +127,13 @@ if (testMode) {
   );
 }
 
-await sendDiscordMessage(
+const validFiles =
+  files.filter(
+    (file): file is File =>
+      file instanceof File
+  );
+
+await sendDiscordResults(
   `🏁 Race Results Test
 
 Series: ${series}
@@ -134,7 +141,8 @@ Series: ${series}
 Winner: ${winnerName}
 
 ${message}`,
-  channelId
+  channelId,
+  validFiles
 );
 
 return NextResponse.json({
