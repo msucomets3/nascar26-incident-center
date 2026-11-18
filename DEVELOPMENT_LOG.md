@@ -155,3 +155,13 @@ Added error handling for:
   - playoff updates
   - standings updates
   - penalty reports
+
+  ### Race Preview Automation
+
+- Added support for type: race-preview announcements.
+- Added routing of race previews to league-racing-chat.
+- Confirmed support for:
+  - preview announcements with one image
+  - off-week announcements with no images
+- Successfully tested:
+  Claude → Incident Center → Race Control → Discord
