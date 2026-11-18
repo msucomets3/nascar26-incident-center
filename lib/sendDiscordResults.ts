@@ -20,16 +20,6 @@ export async function sendDiscordResults(
     content
   );
 
-  formData.append(
-    "allowed_mentions",
-    JSON.stringify({
-      parse: [
-        "roles",
-        "users",
-      ],
-    })
-  );
-
   files.forEach(
     (file, index) => {
       formData.append(
