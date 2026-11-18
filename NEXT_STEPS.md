@@ -79,3 +79,19 @@ Long-Term:
 - Reuse existing Discord bot infrastructure.
 - Reuse existing admin authentication.
 - Reuse existing Vercel deployment.
+
+## Race Results Automation
+
+Status: LIVE
+
+Production Endpoint:
+POST /api/race-results
+
+Test Endpoint:
+POST /api/race-results?test=1
+
+Race Control automatically:
+- Routes announcements by series
+- Pings the correct series role
+- Attaches results images
+- Posts Claude-generated write-ups
