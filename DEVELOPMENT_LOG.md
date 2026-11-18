@@ -77,3 +77,23 @@ Added error handling for:
   - Incident Center
   - Race Control Discord Bot
 - Successfully posted test messages into #bot-testing.
+
+### Race Results Automation
+
+- Added authenticated /api/race-results endpoint.
+- Added series-based Discord channel routing.
+- Added automatic series role mentions.
+- Added PNG image attachment support.
+- Successfully tested end-to-end integration:
+
+  Claude Points App
+  → Incident Center
+  → Race Control
+  → Discord
+
+- Successfully posted:
+  - message content
+  - role mentions
+  - results image
+  - standings image
+  - team standings image

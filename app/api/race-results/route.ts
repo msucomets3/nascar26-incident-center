@@ -149,12 +149,6 @@ const validFiles =
 await sendDiscordResults(
   `<@&${roleId}>
 
-🏁 Race Results Test
-
-Series: ${series}
-
-Winner: ${winnerName}
-
 ${message}`,
   channelId,
   validFiles
