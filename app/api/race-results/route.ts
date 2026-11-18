@@ -49,6 +49,27 @@ export async function POST(
       "message"
     );
 
+  const files =
+  formData.getAll(
+    "files"
+  );
+
+console.log(
+  "FILES RECEIVED:",
+  files.length
+);
+
+for (const file of files) {
+  if (file instanceof File) {
+    console.log(
+      "FILE:",
+      file.name,
+      file.type,
+      file.size
+    );
+  }
+}  
+
   console.log(
     "TEST MODE:",
     testMode
