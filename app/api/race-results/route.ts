@@ -1,4 +1,3 @@
-import { sendDiscordMessage } from "../../../lib/sendDiscordMessage";
 import { sendDiscordResults } from "../../../lib/sendDiscordResults";
 import { NextResponse } from "next/server";
 
@@ -124,7 +123,33 @@ let channelId = "";
 
 if (testMode) {
   channelId =
-  "1572637024861683875";
+    "1572637024861683875";
+
+  if (
+    series ===
+    "Redline Cup Series"
+  ) {
+    roleId =
+      "1488331337428373614";
+  } else if (
+    series ===
+    "Grand National Series"
+  ) {
+    roleId =
+      "1488331424791793736";
+  } else if (
+    series ===
+    "Rapid Response Truck Series"
+  ) {
+    roleId =
+      "1493809179012366419";
+  }
+} else if (
+  type ===
+  "race-preview"
+) {
+  channelId =
+    "1445436012447662163";
 
   if (
     series ===
@@ -184,7 +209,6 @@ if (testMode) {
     }
   );
 }
-
 const validFiles =
   files.filter(
     (file): file is File =>
