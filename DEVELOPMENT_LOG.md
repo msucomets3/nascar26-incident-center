@@ -143,3 +143,15 @@ Added error handling for:
   - standings
   - owner standings
   to Discord from the Points App.
+
+  ### Race Control Automation
+
+- Confirmed support for image-based announcements.
+- Confirmed support for text-only announcements.
+- Race Control can now publish:
+  - race results
+  - race previews
+  - off-week notices
+  - playoff updates
+  - standings updates
+  - penalty reports

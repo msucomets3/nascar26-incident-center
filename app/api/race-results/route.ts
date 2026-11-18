@@ -50,6 +50,16 @@ export async function POST(
       "message"
     );
 
+    const type =
+  formData.get(
+    "type"
+  );
+
+console.log(
+  "TYPE:",
+  type
+);
+
   const files =
   formData.getAll(
     "files"

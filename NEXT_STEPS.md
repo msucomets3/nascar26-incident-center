@@ -95,3 +95,25 @@ Race Control automatically:
 - Pings the correct series role
 - Attaches results images
 - Posts Claude-generated write-ups
+
+## Race Control Automation
+
+Future Announcements:
+
+- Race Previews
+- Results Posts
+- Standings Updates
+- Playoff Updates
+- Penalty Reports
+
+League Racing Chat Channel:
+1445436012447662163
+
+Goal:
+Expand Race Control from race-results-only posting into a universal league announcement system.
+
+Old:
+1572462976311627877
+
+New:
+1572637024861683875
