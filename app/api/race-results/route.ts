@@ -193,7 +193,7 @@ if (testMode) {
   "Rapid Response Truck Series"
 ) {
   channelId =
-    "1540359548140003398";
+  "1544428401346084964";
 
   roleId =
     "1493809179012366419";
